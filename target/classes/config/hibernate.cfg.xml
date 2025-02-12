@@ -16,5 +16,13 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.validator.apply_to_ddl">false</property>
 		<property name="hibernate.hbm2ddl.auto">none</property>
+		
+		<mapping resource="com/futboldraft/modelo/Clasificacion.hbm.xml" />
+		<mapping resource="com/futboldraft/modelo/Equipo.hbm.xml" />
+		<mapping resource="com/futboldraft/modelo/EventosPartido.hbm.xml" />
+		<mapping resource="com/futboldraft/modelo/Goleador.hbm.xml" />
+		<mapping resource="com/futboldraft/modelo/Jornada.hbm.xml" />
+		<mapping resource="com/futboldraft/modelo/Jugador.hbm.xml" />
+		<mapping resource="com/futboldraft/modelo/Partido.hbm.xml" />
     </session-factory>
 </hibernate-configuration>
