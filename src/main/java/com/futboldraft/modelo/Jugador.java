@@ -1,5 +1,5 @@
 package com.futboldraft.modelo;
-// Generated 12 feb 2025, 16:34:06 by Hibernate Tools 6.5.1.Final
+// Generated 12 feb 2025, 18:13:57 by Hibernate Tools 6.5.1.Final
 
 
 import java.util.HashSet;
@@ -16,6 +16,7 @@ public class Jugador  implements java.io.Serializable {
      private String nombre;
      private String posicion;
      private int fuerzaAtaque;
+     private int fuerzaTecnica;
      private int fuerzaDefensa;
      private int fuerzaPortero;
      private Goleador goleador;
@@ -25,18 +26,20 @@ public class Jugador  implements java.io.Serializable {
     }
 
 	
-    public Jugador(String nombre, String posicion, int fuerzaAtaque, int fuerzaDefensa, int fuerzaPortero) {
+    public Jugador(String nombre, String posicion, int fuerzaAtaque, int fuerzaTecnica, int fuerzaDefensa, int fuerzaPortero) {
         this.nombre = nombre;
         this.posicion = posicion;
         this.fuerzaAtaque = fuerzaAtaque;
+        this.fuerzaTecnica = fuerzaTecnica;
         this.fuerzaDefensa = fuerzaDefensa;
         this.fuerzaPortero = fuerzaPortero;
     }
-    public Jugador(Equipo equipo, String nombre, String posicion, int fuerzaAtaque, int fuerzaDefensa, int fuerzaPortero, Goleador goleador, Set eventosPartidos) {
+    public Jugador(Equipo equipo, String nombre, String posicion, int fuerzaAtaque, int fuerzaTecnica, int fuerzaDefensa, int fuerzaPortero, Goleador goleador, Set eventosPartidos) {
        this.equipo = equipo;
        this.nombre = nombre;
        this.posicion = posicion;
        this.fuerzaAtaque = fuerzaAtaque;
+       this.fuerzaTecnica = fuerzaTecnica;
        this.fuerzaDefensa = fuerzaDefensa;
        this.fuerzaPortero = fuerzaPortero;
        this.goleador = goleador;
@@ -77,6 +80,13 @@ public class Jugador  implements java.io.Serializable {
     
     public void setFuerzaAtaque(int fuerzaAtaque) {
         this.fuerzaAtaque = fuerzaAtaque;
+    }
+    public int getFuerzaTecnica() {
+        return this.fuerzaTecnica;
+    }
+    
+    public void setFuerzaTecnica(int fuerzaTecnica) {
+        this.fuerzaTecnica = fuerzaTecnica;
     }
     public int getFuerzaDefensa() {
         return this.fuerzaDefensa;

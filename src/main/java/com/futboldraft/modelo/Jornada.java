@@ -1,5 +1,5 @@
 package com.futboldraft.modelo;
-// Generated 12 feb 2025, 16:34:06 by Hibernate Tools 6.5.1.Final
+// Generated 12 feb 2025, 18:13:57 by Hibernate Tools 6.5.1.Final
 
 
 import java.util.HashSet;
