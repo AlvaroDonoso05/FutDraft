@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 12 feb 2025, 16:34:06 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.Equipo" optimistic-lock="none" table="EQUIPO">
+        <id name="idEquipo" type="java.lang.Integer">
+            <column name="ID_EQUIPO"/>
+            <generator class="identity"/>
+        </id>
+        <property name="nombre" type="string">
+            <column length="50" name="NOMBRE" not-null="true" unique="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="jugadors" table="JUGADOR">
+            <key>
+                <column name="ID_EQUIPO"/>
+            </key>
+            <one-to-many class="com.futboldraft.modelo.Jugador"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="partidosForIdEquipoVisitante" table="PARTIDO">
+            <key>
+                <column name="ID_EQUIPO_VISITANTE" not-null="true"/>
+            </key>
+            <one-to-many class="com.futboldraft.modelo.Partido"/>
+        </set>
+        <one-to-one class="com.futboldraft.modelo.Clasificacion" name="clasificacion"/>
+        <set fetch="select" inverse="true" lazy="true" name="partidosForIdEquipoLocal" table="PARTIDO">
+            <key>
+                <column name="ID_EQUIPO_LOCAL" not-null="true"/>
+            </key>
+            <one-to-many class="com.futboldraft.modelo.Partido"/>
+        </set>
+    </class>
+</hibernate-mapping>

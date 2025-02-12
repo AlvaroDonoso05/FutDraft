@@ -23,5 +23,3 @@ public class MainUI extends Application {
 		launch(args);
 	}
 }
-
-
