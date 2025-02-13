@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 12 feb 2025, 18:13:58 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.Equipo" optimistic-lock="none" table="EQUIPO">
+        <!-- Definición del ID con un generador identity -->
         <id name="idEquipo" type="java.lang.Integer">
             <column name="ID_EQUIPO"/>
             <generator class="identity"/>
         </id>
+
+        <!-- Propiedad nombre del equipo -->
         <property name="nombre" type="string">
             <column length="50" name="NOMBRE" not-null="true" unique="true"/>
         </property>
+
+        <!-- Relación uno a muchos con Jugadores (relación inversa) -->
         <set fetch="select" inverse="true" lazy="true" name="jugadors" table="JUGADOR">
             <key>
                 <column name="ID_EQUIPO"/>
             </key>
             <one-to-many class="com.futboldraft.modelo.Jugador"/>
         </set>
+
+        <!-- Relación uno a muchos con Partidos como visitante (relación inversa) -->
         <set fetch="select" inverse="true" lazy="true" name="partidosForIdEquipoVisitante" table="PARTIDO">
             <key>
                 <column name="ID_EQUIPO_VISITANTE" not-null="true"/>
             </key>
             <one-to-many class="com.futboldraft.modelo.Partido"/>
         </set>
+
+        <!-- Relación one-to-one con Clasificación -->
         <one-to-one class="com.futboldraft.modelo.Clasificacion" name="clasificacion"/>
+
+        <!-- Relación uno a muchos con Partidos como local (relación inversa) -->
         <set fetch="select" inverse="true" lazy="true" name="partidosForIdEquipoLocal" table="PARTIDO">
             <key>
                 <column name="ID_EQUIPO_LOCAL" not-null="true"/>

@@ -6,7 +6,7 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">s@5doZOjsRg65</property>
-        <property name="hibernate.connection.url">jdbc:mysql://donoso005node.mooo.com:25569/trasversal_izan_alvaro</property>
+        <property name="hibernate.connection.url">jdbc:mysql://donoso005node.mooo.com:25569/trasversal_izan_alvaro?serverTimezone=UTC</property>
         <property name="hibernate.connection.username">Izan</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
@@ -17,12 +17,12 @@
 		<property name="hibernate.validator.apply_to_ddl">false</property>
 		<property name="hibernate.hbm2ddl.auto">none</property>
 		
-		<mapping resource="com/futboldraft/modelo/Clasificacion.hbm.xml" />
-		<mapping resource="com/futboldraft/modelo/Equipo.hbm.xml" />
-		<mapping resource="com/futboldraft/modelo/EventosPartido.hbm.xml" />
-		<mapping resource="com/futboldraft/modelo/Goleador.hbm.xml" />
-		<mapping resource="com/futboldraft/modelo/Jornada.hbm.xml" />
-		<mapping resource="com/futboldraft/modelo/Jugador.hbm.xml" />
-		<mapping resource="com/futboldraft/modelo/Partido.hbm.xml" />
+		<mapping resource="com/futboldraft/modelo/Clasificacion.hbm.xml"/>
+		<mapping resource="com/futboldraft/modelo/Equipo.hbm.xml"/>
+		<mapping resource="com/futboldraft/modelo/EventosPartido.hbm.xml"/>
+		<mapping resource="com/futboldraft/modelo/Goleador.hbm.xml"/>
+		<mapping resource="com/futboldraft/modelo/Jornada.hbm.xml"/>
+		<mapping resource="com/futboldraft/modelo/Jugador.hbm.xml"/>
+		<mapping resource="com/futboldraft/modelo/Partido.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 12 feb 2025, 18:13:58 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.Clasificacion" optimistic-lock="none" table="CLASIFICACION">
+        <!-- ID y relación con la tabla Equipo -->
         <id name="idEquipo" type="int">
             <column name="ID_EQUIPO"/>
-            <generator class="foreign"/>
         </id>
+
+        <!-- Relación one-to-one con la clase Equipo -->
         <one-to-one class="com.futboldraft.modelo.Equipo" constrained="true" name="equipo"/>
+
+        <!-- Propiedades -->
         <property name="puntos" type="java.lang.Integer">
             <column name="PUNTOS"/>
         </property>

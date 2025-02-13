@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 12 feb 2025, 18:13:58 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
+    <!-- Clase Jugador mapeada a la tabla JUGADOR -->
     <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.Jugador" optimistic-lock="none" table="JUGADOR">
+        
+        <!-- ID del jugador con generador identity -->
         <id name="idJugador" type="java.lang.Integer">
             <column name="ID_JUGADOR"/>
             <generator class="identity"/>
         </id>
+
+        <!-- Relación many-to-one con Equipo -->
         <many-to-one class="com.futboldraft.modelo.Equipo" fetch="select" name="equipo">
             <column name="ID_EQUIPO"/>
         </many-to-one>
+
+        <!-- Propiedad nombre del jugador -->
         <property name="nombre" type="string">
             <column length="50" name="NOMBRE" not-null="true"/>
         </property>
+
+        <!-- Propiedad posición del jugador -->
         <property name="posicion" type="string">
             <column length="3" name="POSICION" not-null="true"/>
         </property>
+
+        <!-- Propiedades de las fuerzas del jugador -->
         <property name="fuerzaAtaque" type="int">
             <column name="FUERZA_ATAQUE" not-null="true"/>
         </property>
@@ -27,12 +39,17 @@
         <property name="fuerzaPortero" type="int">
             <column name="FUERZA_PORTERO" not-null="true"/>
         </property>
+
+        <!-- Relación one-to-one con Goleador -->
         <one-to-one class="com.futboldraft.modelo.Goleador" name="goleador"/>
+
+        <!-- Relación one-to-many con EventosPartido -->
         <set fetch="select" inverse="true" lazy="true" name="eventosPartidos" table="EVENTOS_PARTIDO">
             <key>
                 <column name="ID_JUGADOR" not-null="true"/>
             </key>
             <one-to-many class="com.futboldraft.modelo.EventosPartido"/>
         </set>
+
     </class>
 </hibernate-mapping>

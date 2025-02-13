@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
+<BorderPane prefHeight="917.0" prefWidth="1277.0" stylesheets="@../../../css/LoginUI.css"
+    xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.monopoly.controlador.LoginController">
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="917.0" prefWidth="1277.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" />
+    <top>
+        <ImageView fitHeight="305.0" fitWidth="777.0" pickOnBounds="true" preserveRatio="true"
+            BorderPane.alignment="CENTER">
+            <image>
+                <Image url="@../../../imagenes/Logo-Monopoly.png" />
+            </image>
+        </ImageView>
+    </top>
+
+    <center>
+        <VBox styleClass="vbox">
+            <children>
+                <ImageView fx:id="btnEmpezar" fitHeight="203.0" fitWidth="336.0"
+                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
+                    preserveRatio="true" styleClass="btnEmpezar">
+                    <image>
+                        <Image url="@../../../imagenes/Botones/start.png" />
+                    </image>
+                </ImageView>
+
+                <ImageView fx:id="btnOpciones" fitHeight="203.0" fitWidth="336.0"
+                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
+                    preserveRatio="true" styleClass="btnOpciones">
+                    <image>
+                        <Image url="@../../../imagenes/Botones/options.png" />
+                    </image>
+                </ImageView>
+
+                <ImageView fx:id="btnClasificacion" fitHeight="203.0" fitWidth="336.0"
+                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
+                    preserveRatio="true" styleClass="btnClasificacion">
+                    <image>
+                        <Image url="@../../../imagenes/Botones/leaderboard.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox styleClass="hbox">
+            <children>
+                <ImageView fx:id="btnSalir" fitHeight="151.0" fitWidth="410.0"
+                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
+                    preserveRatio="true" styleClass="btnSalir">
+                    <image>
+                        <Image url="@../../../imagenes/off.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

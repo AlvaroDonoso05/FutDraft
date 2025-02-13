@@ -1,6 +1,13 @@
 package com.futboldraft.vista;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
 import com.futboldraft.controlador.MainController;
+import com.futboldraft.modelo.Equipo;
+import com.futboldraft.modelo.Jugador;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -15,7 +22,7 @@ public class MainUI extends Application {
 		} else {
 			mc = MainController.getInstance();
 		}
-
+		
 		mc.cargarVista(MainController.LOGIN);
 	}
 

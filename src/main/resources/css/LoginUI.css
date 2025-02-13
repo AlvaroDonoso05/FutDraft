@@ -1,0 +1,23 @@
+.root {
+  -fx-background-image: url("../imagenes/background.jpg");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+}
+
+.vbox {
+  -fx-alignment: center;
+  -fx-spacing: -15px;
+}
+
+.hbox {
+  -fx-alignment: bottom-right;
+  -fx-padding: 0 5px 0 0;
+}
+
+.btnClasificacion {
+  -fx-fit-width: 385px;
+}
+
+.btnSalir {
+  -fx-fit-height: 100px;
+}
