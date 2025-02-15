@@ -157,6 +157,7 @@ bbdd = BaseDatos.getInstance();
 		return jugadoresD;
 	}
 	
+	
 	public void anadirJugadorEquipo(String nEquipo) {
 		String nJugador= "", posicion="";
 		
