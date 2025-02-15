@@ -16,8 +16,8 @@ public class MainController {
 	private boolean first;
 
 	private boolean fullscreen = false;
-	private int width = 1277;
-	private int height = 917;
+	private int width = 1200;
+	private int height = 900;
 
 	public static MainController firstInstance(Stage stage) {
 		if(instance == null) {

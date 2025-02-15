@@ -13,7 +13,7 @@
         </id>
 
         <!-- Relación one-to-one con Jugador -->
-        <one-to-one class="com.futboldraft.modelo.Jugador" constrained="true" name="jugador"/>
+        <one-to-one class="com.futboldraft.modelo.Jugador" constrained="true" name="jugador" />
 
         <!-- Propiedad goles -->
         <property name="goles" type="java.lang.Integer">

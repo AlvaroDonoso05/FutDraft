@@ -41,7 +41,7 @@
         </property>
 
         <!-- Relación one-to-one con Goleador -->
-        <one-to-one class="com.futboldraft.modelo.Goleador" name="goleador"/>
+        <one-to-one class="com.futboldraft.modelo.Goleador" name="goleador" />
 
         <!-- Relación one-to-many con EventosPartido -->
         <set fetch="select" inverse="true" lazy="true" name="eventosPartidos" table="EVENTOS_PARTIDO">

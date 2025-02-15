@@ -2,6 +2,7 @@
   -fx-background-image: url("../imagenes/background.jpg");
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
+  -fx-background-size: cover;
 }
 
 .vbox {
@@ -20,4 +21,11 @@
 
 .btnSalir {
   -fx-fit-height: 100px;
+}
+
+.paneSelect {
+  -fx-background-image: url("../imagenes/seleccion.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-size: cover;
 }

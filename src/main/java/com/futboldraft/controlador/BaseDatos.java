@@ -17,11 +17,14 @@ public class BaseDatos {
 	public boolean isDBEmpty() {
 		boolean empty = true;
 		Session session = null;
-		int result;	
+		long result;	
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			result = session.createNativeQuery("select count(*) from Jugador", Integer.class).uniqueResult();
+			
+			String hql = "SELECT COUNT(*) FROM Equipo";
+	        Query<Long> query = session.createQuery(hql, Long.class);
+			result = query.uniqueResult();
 			session.getTransaction().commit();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -35,7 +38,7 @@ public class BaseDatos {
 				session.close();
 			}
 		}	
-		if(result>0) {
+		if(result > 0) {
 			empty = false;
 		}		
 		return empty;
@@ -87,14 +90,15 @@ public class BaseDatos {
 			}
 		}		
 	}
-	public  List<Jugador> jugadorPosicion(String posicion) {
+	public List<Jugador> jugadorPosicion(String posicion) {
 		Session session = null;
 		List<Jugador> jugadoresP = null;
 
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE posicion = " + posicion);
+			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE posicion = :posicion");
+			query.setParameter("posicion", posicion);
 			jugadoresP = query.list();
 			session.getTransaction().commit();
 		}catch(Exception e) {
@@ -165,7 +169,8 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Equipo> query = session.createQuery("FROM Equipo WHERE nombre LIKE " + criterio);
+			Query<Equipo> query = session.createQuery("FROM Equipo WHERE nombre LIKE :criterio");
+			query.setParameter("criterio", criterio);
 			equipos = query.list();
 			session.getTransaction().commit();
 		}catch(Exception e) {
@@ -183,7 +188,8 @@ public class BaseDatos {
 		
 		
 		return equipos;
-	} 
+	}
+	
 	public void resetearJugadores() {
 		Session session = null;
 		try{
@@ -192,7 +198,7 @@ public class BaseDatos {
 			Query<Jugador> query = session.createQuery("FROM Jugador");
 			List<Jugador> jugadores = query.list();
 			for(Jugador jugador : jugadores) {
-				jugador.setEquipo(new Equipo("Agente Libre"));
+				jugador.setEquipo(null);
 				session.saveOrUpdate(jugador);				
 			}
 			session.getTransaction().commit();
@@ -226,7 +232,7 @@ public class BaseDatos {
 
 	private BaseDatos(){
 		try {
-			sessionFactory = new Configuration().configure("src/main/resources/config/hibernate.cfg.xml").buildSessionFactory();
+			sessionFactory = new Configuration().configure("config/hibernate.cfg.xml").buildSessionFactory();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
