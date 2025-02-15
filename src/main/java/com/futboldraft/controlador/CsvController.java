@@ -9,7 +9,8 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 public class CsvController {
-	public static List<JugadorCsv> abrirCSV() {
+	
+	public  List<JugadorCsv> abrirCSV() {
  		List<JugadorCsv> jugadores = null;
  		try {
  			FileReader reader = new FileReader("main/resources/jugadores_ligaFantasy.csv");

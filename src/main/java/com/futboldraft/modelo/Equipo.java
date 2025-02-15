@@ -13,7 +13,7 @@ public class Equipo  implements java.io.Serializable {
 
      private Integer idEquipo;
      private String nombre;
-     private Set jugadors = new HashSet(0);
+     private Set<Jugador> jugadors = new HashSet<Jugador>(0);
      private Set partidosForIdEquipoVisitante = new HashSet(0);
      private Clasificacion clasificacion;
      private Set partidosForIdEquipoLocal = new HashSet(0);
