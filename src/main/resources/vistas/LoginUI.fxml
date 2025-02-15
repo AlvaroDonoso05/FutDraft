@@ -3,63 +3,165 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="917.0" prefWidth="1277.0" stylesheets="@../../../css/LoginUI.css"
-    xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.monopoly.controlador.LoginController">
-
-    <top>
-        <ImageView fitHeight="305.0" fitWidth="777.0" pickOnBounds="true" preserveRatio="true"
-            BorderPane.alignment="CENTER">
-            <image>
-                <Image url="@../../../imagenes/Logo-Monopoly.png" />
-            </image>
-        </ImageView>
-    </top>
-
-    <center>
-        <VBox styleClass="vbox">
-            <children>
-                <ImageView fx:id="btnEmpezar" fitHeight="203.0" fitWidth="336.0"
-                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
-                    preserveRatio="true" styleClass="btnEmpezar">
-                    <image>
-                        <Image url="@../../../imagenes/Botones/start.png" />
-                    </image>
-                </ImageView>
-
-                <ImageView fx:id="btnOpciones" fitHeight="203.0" fitWidth="336.0"
-                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
-                    preserveRatio="true" styleClass="btnOpciones">
-                    <image>
-                        <Image url="@../../../imagenes/Botones/options.png" />
-                    </image>
-                </ImageView>
-
-                <ImageView fx:id="btnClasificacion" fitHeight="203.0" fitWidth="336.0"
-                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
-                    preserveRatio="true" styleClass="btnClasificacion">
-                    <image>
-                        <Image url="@../../../imagenes/Botones/leaderboard.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </VBox>
-    </center>
-
-    <bottom>
+<BorderPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@../css/LoginUI.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FutDraftController">
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+              <VBox alignment="CENTER" spacing="10" style="-fx-padding: 10px;">
+               <children>
+                  <GridPane alignment="CENTER" prefHeight="784.0" prefWidth="1171.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="207.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="207.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="188.0" minHeight="10.0" prefHeight="177.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <ImageView fx:id="del1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <children>
+                              <ImageView fx:id="def4" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <children>
+                              <ImageView fx:id="def3" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <ImageView fx:id="def2" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                           <children>
+                              <ImageView fx:id="def1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="cen4" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="cen3" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+                           <children>
+                              <ImageView fx:id="del2" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="cen2" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="cen1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children></Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <children>
+                              <ImageView fx:id="por1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-76.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </GridPane>
+               </children>
+              </VBox>
+         </children>
+      </StackPane>
+   </center>
+   <bottom>
         <HBox styleClass="hbox">
             <children>
-                <ImageView fx:id="btnSalir" fitHeight="151.0" fitWidth="410.0"
-                    onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true"
-                    preserveRatio="true" styleClass="btnSalir">
-                    <image>
-                        <Image url="@../../../imagenes/off.png" />
-                    </image>
-                </ImageView>
+            <ImageView fx:id="btnEmpezar" fitHeight="102.0" fitWidth="269.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Botones/start.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnSalir" fitHeight="102.0" fitWidth="269.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Botones/btnSalir.png" />
+               </image>
+            </ImageView>
             </children>
         </HBox>
     </bottom>
+   <top>
+      <Pane prefHeight="89.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="63.0" fitWidth="1176.0" layoutX="21.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/textselectequpo2.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </top>
 </BorderPane>
