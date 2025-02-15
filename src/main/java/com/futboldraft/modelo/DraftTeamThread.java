@@ -8,10 +8,6 @@ import com.futboldraft.controlador.BaseDatos;
 
 public class DraftTeamThread {
 
-	private List<Jugador> jugadoresPor;
-	private List<Jugador> jugadoresDef;
-	private List<Jugador> jugadoresMed;
-	private List<Jugador> jugadoresDel;
 	private BaseDatos bbdd;
 	private Draft draft;
 	private Equipo equipo;
