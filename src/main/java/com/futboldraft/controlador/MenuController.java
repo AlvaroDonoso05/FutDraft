@@ -16,7 +16,7 @@ public class MenuController {
 	private BaseDatos bbdd;
 
 	@FXML
-	public void Initialise() {
+	public void initialize() {
 		
 		bbdd = BaseDatos.getInstance();
 		
@@ -37,6 +37,8 @@ public class MenuController {
 				}
 			}
 		}
+		
+		bbdd.resetearJugadores();
 
 
 	}

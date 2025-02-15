@@ -43,7 +43,6 @@ public class DraftTeamThread {
 			jugador.setEquipo(equipo);
 			bbdd.insertarJugador(jugador);		
 		}
-
 	}
 
 }

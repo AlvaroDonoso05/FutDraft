@@ -208,8 +208,6 @@ public class BaseDatos {
 				session.close();
 			}
 		}
-
-
 	}
 
 	public void cerrarSessionFactory() {
