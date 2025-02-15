@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import com.futboldraft.controlador.BaseDatos;
 
-public class DraftTeamThread {
+public class DraftTeamThread extends Thread{
 
 	private BaseDatos bbdd;
 	private Draft draft;

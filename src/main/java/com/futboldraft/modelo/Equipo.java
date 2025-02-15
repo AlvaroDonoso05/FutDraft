@@ -2,7 +2,9 @@ package com.futboldraft.modelo;
 // Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -74,6 +76,43 @@ public class Equipo  implements java.io.Serializable {
     
     public void setPartidosForIdEquipoLocal(Set partidosForIdEquipoLocal) {
         this.partidosForIdEquipoLocal = partidosForIdEquipoLocal;
+    }
+    
+    public int atacar() {
+    	int ataque = 0, fTecn = 0;
+    	Jugador jugAt;
+    	List<Jugador> jugadores = new ArrayList<Jugador>();
+    	List<Jugador> jugMed = new ArrayList<Jugador>();
+    	jugadores.addAll(jugadors);
+    	
+    	do {
+    		jugAt = jugadores.get((int)(Math.random() * jugadores.size()));
+    	}while(jugAt.getPosicion().equalsIgnoreCase("POR"));
+    	
+    	for(Jugador jugador : jugadores) {
+    		if(jugador.getPosicion().equalsIgnoreCase("MED")) {
+    			fTecn = fTecn + jugador.getFuerzaTecnica();
+    		}
+    	}
+    	ataque = jugAt.getFuerzaAtaque() * 2 + fTecn;
+    	
+    	return (int)(Math.random()*ataque);
+    }
+    
+    public int defender() {
+    	int defensa = 0;
+    	List<Jugador> jugadores = new ArrayList<Jugador>();
+    	jugadores.addAll(jugadors);
+    	
+    	for(Jugador jugador : jugadores) {
+    		if(jugador.getPosicion().equalsIgnoreCase("POR")) {
+    			defensa = defensa + (jugador.getFuerzaPortero()*3);   			
+    		}else if(jugador.getPosicion().equalsIgnoreCase("DEF")) {
+    			defensa = defensa + jugador.getFuerzaDefensa();  			
+    		}    		
+    	}
+    	
+    	return (int)(Math.random()*defensa);
     }
 
 

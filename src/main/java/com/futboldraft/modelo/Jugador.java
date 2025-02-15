@@ -58,7 +58,15 @@ public class Jugador  implements java.io.Serializable {
 		this.fuerzaPortero = fuerzaPortero;
 	
 	}
-
+	
+	public int calcularMedia(){		
+		return (this.fuerzaAtaque + this.fuerzaDefensa + this.fuerzaPortero + this.fuerzaTecnica) / 4;
+	}
+	
+	public int statsTotales() {
+		return this.fuerzaAtaque + this.fuerzaDefensa + this.fuerzaPortero + this.fuerzaTecnica;
+	}
+	
 	public Integer getIdJugador() {
 		return this.idJugador;
 	}

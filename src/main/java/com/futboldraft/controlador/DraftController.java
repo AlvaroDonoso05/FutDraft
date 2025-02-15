@@ -31,6 +31,7 @@ public class DraftController {
 		return jugadoresD;
 	}
 	
+	
 	public void anadirJugadorEquipo(String nEquipo) {
 		String nJugador= "", posicion="";
 		
