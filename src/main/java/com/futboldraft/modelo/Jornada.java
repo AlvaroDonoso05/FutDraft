@@ -13,7 +13,7 @@ public class Jornada  implements java.io.Serializable {
 
      private Integer idJornada;
      private int numero;
-     private Set partidos = new HashSet(0);
+     private Set<EventosPartido> partidos = new HashSet<EventosPartido>(0);
 
     public Jornada() {
     }

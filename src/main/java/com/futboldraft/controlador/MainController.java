@@ -44,7 +44,7 @@ public class MainController {
 		Parent root = loader.load();
 
 		Scene scene = new Scene(root);
-		stage.setTitle("Monopoly 2.0");
+		stage.setTitle("FutDraft");
 		stage.setMinWidth(width);
 		stage.setMinHeight(height);
 		stage.setScene(scene);

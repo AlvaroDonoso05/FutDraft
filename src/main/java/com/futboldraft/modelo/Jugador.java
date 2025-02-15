@@ -21,7 +21,7 @@ public class Jugador  implements java.io.Serializable {
 	private int fuerzaDefensa;
 	private int fuerzaPortero;
 	private Goleador goleador;
-	private Set eventosPartidos = new HashSet(0);
+	private Set<EventosPartido> eventosPartidos = new HashSet<EventosPartido>(0);
 
 	public Jugador() {
 	}
@@ -35,6 +35,7 @@ public class Jugador  implements java.io.Serializable {
 		this.fuerzaDefensa = fuerzaDefensa;
 		this.fuerzaPortero = fuerzaPortero;
 	}
+	
 	public Jugador(Equipo equipo, String nombre, String posicion, int fuerzaAtaque, int fuerzaTecnica, int fuerzaDefensa, int fuerzaPortero, Goleador goleador, Set eventosPartidos) {
 		this.equipo = equipo;
 		this.nombre = nombre;
@@ -45,6 +46,17 @@ public class Jugador  implements java.io.Serializable {
 		this.fuerzaPortero = fuerzaPortero;
 		this.goleador = goleador;
 		this.eventosPartidos = eventosPartidos;
+	}
+	
+	public Jugador(Equipo equipo, String nombre, String posicion, int fuerzaAtaque, int fuerzaTecnica, int fuerzaDefensa, int fuerzaPortero) {
+		this.equipo = equipo;
+		this.nombre = nombre;
+		this.posicion = posicion;
+		this.fuerzaAtaque = fuerzaAtaque;
+		this.fuerzaTecnica = fuerzaTecnica;
+		this.fuerzaDefensa = fuerzaDefensa;
+		this.fuerzaPortero = fuerzaPortero;
+	
 	}
 
 	public Integer getIdJugador() {

@@ -17,7 +17,7 @@ public class Partido  implements java.io.Serializable {
      private Equipo equipoByIdEquipoLocal;
      private Integer golesLocal;
      private Integer golesVisitante;
-     private Set eventosPartidos = new HashSet(0);
+     private Set<EventosPartido> eventosPartidos = new HashSet<EventosPartido>(0);
 
     public Partido() {
     }
