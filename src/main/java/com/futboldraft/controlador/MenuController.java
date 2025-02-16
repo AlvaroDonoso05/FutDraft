@@ -18,26 +18,32 @@ public class MenuController {
 	@FXML
 	public void initialize() {
 		
-		bbdd = BaseDatos.getInstance();
 		
+		bbdd = BaseDatos.getInstance();
+
 		if(bbdd.isDBEmpty()) {
 			CsvController csvContr = new CsvController();
 
 			List<JugadorCsv> jugadoresC = csvContr.abrirCSV();
-			List<Equipo> equipos = new ArrayList<Equipo>();
+			List<Equipo> equipos = bbdd.selectEquiposByNombre("%");
+			List<String> equiposString = new ArrayList<String>();
 
 			for(JugadorCsv jugadorC : jugadoresC) {
-				Jugador jugador = new Jugador(new Equipo("Agente Libre"), jugadorC.getNombre(), jugadorC.getPosicion(), jugadorC.getFuerzaAtaque(),
+				Jugador jugador = new Jugador(null, jugadorC.getNombre(), jugadorC.getPosicion(), jugadorC.getFuerzaAtaque(),
 						jugadorC.getFuerzaTecnica(), jugadorC.getFuerzaDefensa(), jugadorC.getFuerzaPortero());
 				bbdd.insertarJugador(jugador);
-				Equipo equipo = new Equipo(jugadorC.getEquipo());
-				if(!equipos.contains(equipo)) {
-					equipos.add(equipo);
-					bbdd.insertarEquipo(equipo);
+
+				for(Equipo equipoB: equipos) {
+					equiposString.add(equipoB.getNombre());
+				}
+
+				if(!equiposString.contains(jugadorC.getEquipo())) {
+					equiposString.add(jugadorC.getEquipo());
+					bbdd.insertarEquipo(new Equipo(jugadorC.getEquipo()));
 				}
 			}
 		}
-		
+
 		bbdd.resetearJugadores();
 
 

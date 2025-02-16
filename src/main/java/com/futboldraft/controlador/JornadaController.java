@@ -25,8 +25,13 @@ public class JornadaController {
 		equipoJug = equipos.get(0);
 		Equipo eqTemp = equipos.set(0, equipoJug);
 		equipos.add(eqTemp);
+		
+		for(int i = 0; i<equipos.size(); i++) {
+			Clasificacion clas = new Clasificacion(equipos.get(i));
+			bbdd.insertarClasificacion(clas);
+		}
 	}
-	
+	//botonSiguiente Jornada, inicializar jornada a 0 a 1, decidir despues
 	private void enfrentamientosJornada() {
 		if(contJorn%2==0) {
 			for(int i = 0; i<equipos.size()/2;i++) {

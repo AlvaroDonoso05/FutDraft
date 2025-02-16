@@ -78,17 +78,11 @@ public class Equipo  implements java.io.Serializable {
         this.partidosForIdEquipoLocal = partidosForIdEquipoLocal;
     }
     
-    public int atacar() {
+    public int atacar(Jugador jugAt) {
     	int ataque = 0, fTecn = 0;
-    	Jugador jugAt;
     	List<Jugador> jugadores = new ArrayList<Jugador>();
-    	List<Jugador> jugMed = new ArrayList<Jugador>();
     	jugadores.addAll(jugadors);
-    	
-    	do {
-    		jugAt = jugadores.get((int)(Math.random() * jugadores.size()));
-    	}while(jugAt.getPosicion().equalsIgnoreCase("POR"));
-    	
+    		
     	for(Jugador jugador : jugadores) {
     		if(jugador.getPosicion().equalsIgnoreCase("MED")) {
     			fTecn = fTecn + jugador.getFuerzaTecnica();
