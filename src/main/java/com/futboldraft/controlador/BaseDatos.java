@@ -47,7 +47,7 @@ public class BaseDatos {
 	
 	
 	
-	public List<Clasificacion> selectClasificacionOrdenada(){
+	public List<Clasificacion> selectClasificacionOrdenada(String orden){
 		List<Clasificacion> clasificaciones = null;
 		
 		Session session = null;
@@ -55,7 +55,8 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Clasificacion> query = session.createQuery("FROM Clasificacion ORDER BY PUNTOS DESC");
+			Query<Clasificacion> query = session.createQuery("FROM Clasificacion ORDER BY PUNTOS :orden");
+			query.setParameter("orden", orden);
 			clasificaciones = query.list();
 			session.getTransaction().commit();
 		}catch(Exception e) {
@@ -196,7 +197,7 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Jugador> query = session.createQuery("FROM Jugador WHERE nombre = :nombre AND posicion = :posicion");
+			Query<Jugador> query = session.createQuery("FROM Jugador WHERE nombre = :nombre AND posicion LIKE :posicion");
 			query.setParameter("nombre", nombre);
 			query.setParameter("posicion", posicion);
 			jugador = query.getSingleResult();
