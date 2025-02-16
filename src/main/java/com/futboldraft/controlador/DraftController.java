@@ -3,6 +3,8 @@ package com.futboldraft.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.chainsaw.Main;
+
 import com.futboldraft.modelo.*;
 
 import javafx.animation.KeyFrame;
@@ -233,6 +235,12 @@ public class DraftController {
 			if (event.getSource() == btnEmpezar) {
 				if(!btnEmpezar.getImage().equals(btnEmpezar_dis)) {
 					btnEmpezar.setImage(btnEmpezar_Estado1);
+					mc.setSiguienteVista(MainController.SIMULACION);
+					try {
+						mc.cargarVista(MainController.LOADING);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 				}
 			} else if (event.getSource() == btnSalir) {
 				btnSalir.setImage(btnSalir_Estado1);
