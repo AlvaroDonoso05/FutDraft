@@ -140,6 +140,7 @@ public class JornadaController {
 				btnSalir.setImage(btnSalir_Estado1);
 			}
 		}
+
 	}
 	
 	@FXML

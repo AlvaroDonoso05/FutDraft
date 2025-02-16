@@ -2,6 +2,7 @@ package com.futboldraft.modelo;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class JornadaThread extends Thread{
 	private int idJornada;
 	private int golesLoc;
 	private int golesVis;
+	private List<Integer> tiempos;
 
 
 	public JornadaThread(boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada) {
@@ -28,6 +30,7 @@ public class JornadaThread extends Thread{
 		this.idJornada = idJornada;
 		this.golesLoc = 0;
 		this.golesVis = 0;
+		this.tiempos = new ArrayList<Integer>();
 	}
 
 	public void run() {
@@ -44,6 +47,12 @@ public class JornadaThread extends Thread{
 		Set<Jugador> jugadoresSetVis = equipoVis.getJugadors();
 		List<Jugador> lJugadoresVis = new ArrayList<Jugador>();
 		lJugadoresVis.addAll(jugadoresSetVis);
+		
+		//crear timestamps aleatorios
+		for(int i=0; i<16; i++) {
+			tiempos.add((int)(Math.random()*91));
+		}
+		Collections.sort(tiempos);
 		
 		//insertar partido
 		Partido partido = new Partido();
@@ -132,25 +141,50 @@ public class JornadaThread extends Thread{
 				frase = seleccionarResultado(tipoEvento[0].toString(), jugAtk);
 				if(jugAtk.getEquipo().getIdEquipo() == equipoLoc.getIdEquipo()) {
 					partido.setGolesLocal(partido.getGolesLocal() + 1);
+					golesLoc = golesLoc + 1;
 					bbdd.insertarPartido(partido);
 					EventosPartido evPart = new EventosPartido(jugAtk, partido, 90, tipoEvento[0].toString(), frase);
 					bbdd.insertarEventoPartido(evPart);
 				}else {
 					partido.setGolesVisitante(partido.getGolesVisitante() + 1);
+					golesVis = golesVis +1;
 					bbdd.insertarPartido(partido);
-					EventosPartido evPart = new EventosPartido(jugAtk, partido, 90, tipoEvento[0].toString(), frase);
+					EventosPartido evPart = new EventosPartido(jugAtk, partido, tiempos.get(i), tipoEvento[0].toString(), frase);
 					bbdd.insertarEventoPartido(evPart);
 				}
 				
 			}else {
 				random = (int)(1 + Math.random()*4);
 				frase = seleccionarResultado(tipoEvento[random].toString(), jugDef);
-				EventosPartido evPart = new EventosPartido(jugDef, partido, 90, tipoEvento[random].toString(), frase);
+				EventosPartido evPart = new EventosPartido(jugDef, partido, tiempos.get(i), tipoEvento[random].toString(), frase);
 				bbdd.insertarEventoPartido(evPart);
 			}
+			try {
+				this.wait(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}//fin bucle partido
+		
+		Clasificacion clas1 = bbdd.selectClasificacion(equipoLoc.getIdEquipo());
+		clas1.setGolesContra(clas1.getGolesContra() + golesVis);
+		clas1.setGolesFavor(clas1.getGolesFavor() + golesLoc);
+		
+		Clasificacion clas2 = bbdd.selectClasificacion(equipoVis.getIdEquipo());
+		clas2.setGolesContra(clas1.getGolesContra() + golesLoc);
+		clas2.setGolesFavor(clas1.getGolesFavor() + golesVis);
+		
+		if(golesLoc>golesVis) {
+			clas1.setPuntos(clas1.getPuntos() + 3);
+		}else if(golesVis>golesLoc) {
+			clas2.setPuntos(clas2.getPuntos() + 3);
+		}else {
+			clas1.setPuntos(clas1.getPuntos() + 1);
+			clas2.setPuntos(clas2.getPuntos() + 1);
 		}
-		//fin bucle partido
-		Clasificacion clas1 = bbdd.selectClasificacion(frase);
+		
+		bbdd.insertarClasificacion(clas1);
+		bbdd.insertarClasificacion(clas2);
 		
 		
 
