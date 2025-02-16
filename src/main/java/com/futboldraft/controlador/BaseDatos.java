@@ -44,6 +44,52 @@ public class BaseDatos {
 		return empty;
 	}
 	
+	public void insertarClasificacion(Clasificacion clasif) {
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(clasif);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+	}
+	
+	public void insertarPartido(Partido partido) {
+	Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(partido);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+	
+		
+	}
+	
 	public Jugador selectJugador(String nombre, String posicion) {
 		Jugador jugador = null;
 		Session session = null;
@@ -198,7 +244,7 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Jugador> query = session.createQuery("FROM Jugador");
+			Query<Jugador> query = session.createQuery("FROM Jugador WHERE equipo IS NOT NULL");
 			List<Jugador> jugadores = query.list();
 			for(Jugador jugador : jugadores) {
 				jugador.setEquipo(null);

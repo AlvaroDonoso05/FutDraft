@@ -109,6 +109,7 @@ public class MenuController {
 		timeline.play();
 	}
 
+
 	private boolean checkCreeds() {
 		
 		for(Entry<String, String> entry : creeds.entrySet()) {
