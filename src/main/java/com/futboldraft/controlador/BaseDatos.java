@@ -44,6 +44,78 @@ public class BaseDatos {
 		return empty;
 	}
 	
+	
+	
+	public Clasificacion selectClasificacion(String criterio) {
+		Session session = null;
+		Clasificacion clasif;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Clasificacion> query = session.createQuery("FROM Clasificacion WHERE idEquipo LIKE :criterio");
+			query.setParameter("criterio", criterio);
+			clasif = query.getSingleResult();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+		return clasif;
+	}
+	
+	public void insertarEventoPartido(EventosPartido eventoPartido) {
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(eventoPartido);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+	}
+	
+	public void insertarJornada(Jornada jornada) {
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(jornada);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+	}
+	
 	public void insertarClasificacion(Clasificacion clasif) {
 		Session session = null;
 		

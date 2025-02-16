@@ -32,7 +32,6 @@ public class JornadaThread extends Thread{
 
 	public void run() {
 		//jornada se genera en el controlador
-		//insertar partido
 
 		int statsTLoc = 0, statsTVis = 0, atkL = 8, defL = 8, atkV = 8, defV = 8, atk = 0, def = 0, random;
 		String frase="";
@@ -46,6 +45,7 @@ public class JornadaThread extends Thread{
 		List<Jugador> lJugadoresVis = new ArrayList<Jugador>();
 		lJugadoresVis.addAll(jugadoresSetVis);
 		
+		//insertar partido
 		Partido partido = new Partido();
 		partido.setEquipoByIdEquipoLocal(equipoLoc);
 		partido.setEquipoByIdEquipoVisitante(equipoVis);
@@ -72,7 +72,7 @@ public class JornadaThread extends Thread{
 			atkL -= 2;
 			defL +=2;
 		}
-
+		//bucle simulacion partido
 		for(int i = 0; i<16;i++) {
 			//if alternar ataque/efensa
 			if(i%2==0) {
@@ -99,6 +99,7 @@ public class JornadaThread extends Thread{
 					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") ||
 							!jugDef.getPosicion().equalsIgnoreCase("POR"));
 				}
+				//else alternar ataque/defensa
 			}else {
 				//si el eqV tiene ataques
 				if(atkV>0) {
@@ -127,17 +128,29 @@ public class JornadaThread extends Thread{
 			}
 			
 			//una vez ha atacado Local o visitante, se comprueba quien gana
-			if(atk>def) {
-				random = (int)(Math.random()*2);			
-				frase = seleccionarResultado(tipoEvento[random].toString(), jugAtk);
-				jugAtk.getEquipo().getIdEquipo();
-
-				//else alternar ataque/defensa
+			if(atk>def) {		
+				frase = seleccionarResultado(tipoEvento[0].toString(), jugAtk);
+				if(jugAtk.getEquipo().getIdEquipo() == equipoLoc.getIdEquipo()) {
+					partido.setGolesLocal(partido.getGolesLocal() + 1);
+					bbdd.insertarPartido(partido);
+					EventosPartido evPart = new EventosPartido(jugAtk, partido, 90, tipoEvento[0].toString(), frase);
+					bbdd.insertarEventoPartido(evPart);
+				}else {
+					partido.setGolesVisitante(partido.getGolesVisitante() + 1);
+					bbdd.insertarPartido(partido);
+					EventosPartido evPart = new EventosPartido(jugAtk, partido, 90, tipoEvento[0].toString(), frase);
+					bbdd.insertarEventoPartido(evPart);
+				}
+				
 			}else {
-				random = (int)(2 + Math.random()*4);
+				random = (int)(1 + Math.random()*4);
 				frase = seleccionarResultado(tipoEvento[random].toString(), jugDef);
+				EventosPartido evPart = new EventosPartido(jugDef, partido, 90, tipoEvento[random].toString(), frase);
+				bbdd.insertarEventoPartido(evPart);
 			}
 		}
+		//fin bucle partido
+		Clasificacion clas1 = bbdd.selectClasificacion(frase);
 		
 		
 
