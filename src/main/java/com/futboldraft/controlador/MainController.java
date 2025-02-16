@@ -12,6 +12,7 @@ public class MainController {
 	public static final String LOGIN = "/vistas/MainMenu.fxml";
 	public static final String DRAFT = "/vistas/DraftUI.fxml";
 	public static final String LOADING = "/vistas/Loading.fxml";
+	public static final String SIMULACION = "/vistas/Simulacion.fxml";
 
 	private static MainController instance;
 	private Stage stage;
