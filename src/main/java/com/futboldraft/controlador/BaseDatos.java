@@ -123,7 +123,8 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE equipo.nombre = 'Agente Libre' AND posicion = " + posicion);
+			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE equipo.nombre IS NULL AND posicion = :posicion" );
+			query.setParameter("posicion", posicion);
 			jugadoresP = query.list();
 			session.getTransaction().commit();
 		}catch(Exception e) {
