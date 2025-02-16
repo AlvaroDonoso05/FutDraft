@@ -23,7 +23,7 @@ public class MainUI extends Application {
 			mc = MainController.getInstance();
 		}
 		
-		mc.cargarVista(MainController.LOGIN);
+		mc.cargarVista(MainController.DRAFT);
 	}
 
 	public static void main(String[] args) {
