@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class JornadaController {
@@ -30,33 +31,32 @@ public class JornadaController {
 	private Equipo equipoJug;
 	private int contJorn, jorn;
 	private Equipo [][] eqEnfr;
-	private List<JornadaThread> lJornTh;
 	private List<Clasificacion> clasificaciones;
 	private DraftController draftC;
 	private boolean cambiarJug;
 	
 	@FXML
     private ChoiceBox<String> choiceBoxJornadas;
-
     @FXML
-    private ListView<String> partidosListView;
-
+    private ListView<String> listViewPartidos;
     @FXML
-    private ListView<String> eventosListView;
+    private ListView<String> listViewEventos;
+    
+    @FXML
+    private Text txtTiempo, txtContador;
 	
 	@FXML
 	private ImageView btnSiguienteJornada, btnSalir;
 	
-	private Image btnSJornada_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnSJornada.png.png").toExternalForm());
+	private Image btnSJornada_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnSJornada.png").toExternalForm());
 	private Image btnSJornada_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnSJornada_action.png").toExternalForm());
 	private Image btnSalir_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnSalir.png").toExternalForm());
 	private Image btnSalir_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnSalir_action.png").toExternalForm());
 	
 	private MainController mc;
 	
-	private ObservableList<String> listaJornadas = FXCollections.observableArrayList();
-    private Map<Integer, List<String>> jornadasPartidos = new HashMap<>();
-    private Map<String, List<String>> partidoEventos = new HashMap<>();
+	private final Map<Integer, List<PartidoThread>> jornadas = new HashMap<>();
+    private final Map<String, List<String>> eventosPartidos = new HashMap<>();
 	
 	@FXML
 	private void intialize() {
@@ -64,7 +64,6 @@ public class JornadaController {
 		contJorn = 0;
 		jorn = 1;
 		eqEnfr = new Equipo[10][2];
-		lJornTh = new ArrayList<JornadaThread>();
 		equipos = bbdd.selectEquiposByNombre("%");
 		Collections.shuffle(equipos);
 		draftC = new DraftController();
@@ -82,21 +81,29 @@ public class JornadaController {
 			equipos2.add(equipos.remove(equipos.size() - 1));
 		}
 		
+		listViewPartidos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> mostrarEventos(newVal));
+		
+		choiceBoxJornadas.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+	        if (newVal != null) {
+	            int jornadaSeleccionada = Integer.parseInt(newVal.replace("Jornada ", ""));
+	            mostrarJornada(jornadaSeleccionada);
+	        }
+	    });
+		
 	}
 	
-	public void configurarListeners() {
-		 choiceBoxJornadas.getSelectionModel().selectedItemProperty().addListener((obs, oldJornada, newJornada) -> {
-	            if (newJornada != null) {
-	                partidosListView.setItems(FXCollections.observableArrayList(jornadasPartidos.get(newJornada)));
-	                eventosListView.getItems().clear();
-	            }
-	        });
+	private void mostrarJornada(int jornada) {
+	    if (jornadas.containsKey(jornada)) {
+	        List<PartidoThread> partidos = jornadas.get(jornada);
+	        List<String> nombresPartidos = new ArrayList<>();
 
-		 partidosListView.getSelectionModel().selectedItemProperty().addListener((obs, oldPartido, newPartido) -> {
-	            if (newPartido != null) {
-	                eventosListView.setItems(FXCollections.observableArrayList(partidoEventos.get(newPartido)));
-	            }
-	        });
+	        for (PartidoThread partido : partidos) {
+	            nombresPartidos.add(partido.getNombrePartido());
+	        }
+
+	        listViewPartidos.getItems().setAll(nombresPartidos);
+	        listViewEventos.getItems().clear();
+	    }
 	}
 	
 	//botonSiguiente Jornada, inicializar jornada a 0 a 1, decidir despues
@@ -104,10 +111,11 @@ public class JornadaController {
 	private void enfrentamientosJornada() {
 		cambiarJug = false;
 		if(jorn < 20) {
-			listaJornadas.add("Jornada " + jorn);
-			choiceBoxJornadas.setItems(listaJornadas);
-			choiceBoxJornadas.setItems(listaJornadas);
-            choiceBoxJornadas.setValue("Jornada " + jorn);
+			choiceBoxJornadas.getItems().add("Jornada " + jorn);
+	        choiceBoxJornadas.setValue("Jornada " + jorn);
+	        
+	        List<PartidoThread> partidos = new ArrayList<>();
+	        List<String> nombresPartidos = new ArrayList<>();
 			
 			if(contJorn%2==0) {
 				for(int i = 0; i<equipos.size();i++) {	
@@ -120,12 +128,34 @@ public class JornadaController {
 					eqEnfr[i][0] = equipos2.get(i + contJorn);
 				}
 			}
+			
+			for (int i = 0; i < eqEnfr[0].length; i++) {
+	            String partidoNombre = "Equipo" + (i * 2 + 1) + " vs Equipo" + (i * 2 + 2);
+	            nombresPartidos.add(partidoNombre);
+	            PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[0][i], eqEnfr[1][i], jorn, eventosPartidos, listViewPartidos, listViewEventos);
+	            partidos.add(partido);
+	            eventosPartidos.put(partidoNombre, new ArrayList<>());
+	        }
+			
+			jornadas.put(jorn, partidos);
+			listViewPartidos.getItems().setAll(nombresPartidos);
+			
 			bbdd.insertarJornada(new Jornada(jorn));
-			for(int i = 0; i<eqEnfr[0].length;i++) {
-				JornadaThread jornTh = new JornadaThread(false, eqEnfr[0][i], eqEnfr[1][i], jorn);
-				lJornTh.add(jornTh);
-				jornTh.start();
-			}
+			
+			for (PartidoThread partido : partidos) {
+	            partido.start();
+	        }
+			
+			new Thread(() -> {
+	            for (PartidoThread partido : partidos) {
+	                try {
+	                    partido.join();
+	                } catch (InterruptedException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }).start();
+			
 			contJorn++;
 			jorn++;
 		}	
@@ -138,6 +168,12 @@ public class JornadaController {
 			}
 		}
 	}
+	
+	private void mostrarEventos(String partido) {
+        if (partido != null) {
+            listViewEventos.getItems().setAll(eventosPartidos.get(partido));
+        }
+    }
 	
 	public void hacerFichajes() {
 		Jugador jPor, jDef, jMed, jDel, jPor1, jDef1, jMed1, jDel1;

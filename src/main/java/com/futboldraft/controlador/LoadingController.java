@@ -56,6 +56,22 @@ public class LoadingController {
 					e.printStackTrace();
 				}
 				break;
+				
+			case MainController.SIMULACION:
+				try {
+					Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2000), e -> {
+						try {
+							mc.cargarVista(MainController.SIMULACION);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}));
+					timeline.setCycleCount(1);
+					timeline.play();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
 			default:
 				try {
 					Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2000), e -> {

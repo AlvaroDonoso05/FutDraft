@@ -1,5 +1,6 @@
 package com.futboldraft.controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -337,6 +338,39 @@ public class BaseDatos {
 		
 		
 		return equipos;
+	}
+	
+	public List<String> selectEventosByPartido(Partido criterio) {
+		List<EventosPartido> eventos;
+		List<String> descripcion = new ArrayList<String>();
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<EventosPartido> query = session.createQuery("FROM EventosPartido WHERE partido = :criterio");
+			query.setParameter("criterio", criterio);
+			eventos = query.list();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}
+		
+		for(EventosPartido evento: eventos) {
+			descripcion.add(evento.getDescripcion());
+		}
+		
+		
+		return descripcion;
 	}
 	
 	public void resetearJugadores() {

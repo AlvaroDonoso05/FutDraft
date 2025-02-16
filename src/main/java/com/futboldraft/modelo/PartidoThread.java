@@ -3,26 +3,36 @@ package com.futboldraft.modelo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.futboldraft.controlador.BaseDatos;
 import com.futboldraft.modelo.EventosPartido.tipoEventoEnum;
 
-public class JornadaThread extends Thread{
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.text.Text;
 
-	private BaseDatos bbdd;
-	private boolean imprimir;
-	private Equipo equipoLoc;
-	private Equipo equipoVis;
-	private int idJornada;
-	private int golesLoc;
-	private int golesVis;
-	private List<Integer> tiempos;
+public class PartidoThread extends Thread{
+
+    private BaseDatos bbdd;
+    private boolean imprimir;
+    private Equipo equipoLoc;
+    private Equipo equipoVis;
+    private int idJornada;
+    private int golesLoc;
+    private int golesVis;
+    private List<Integer> tiempos;
+    private Map<String, List<String>> eventosPartidos;
+    private final String nombrePartido;
+    private ListView<String> listViewPartidos;
+    private ListView<String> listViewEventos;
 
 
-	public JornadaThread(boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada) {
-		super();
+    public PartidoThread(String nombrePartido, boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada, Map<String, List<String>> eventosPartidos, ListView<String> listViewPartidos, ListView<String> listViewEventos) {
 		this.bbdd = BaseDatos.getInstance();
 		this.imprimir = imprimir;
 		this.equipoLoc = equipoLoc;
@@ -30,8 +40,12 @@ public class JornadaThread extends Thread{
 		this.idJornada = idJornada;
 		this.golesLoc = 0;
 		this.golesVis = 0;
-		this.tiempos = new ArrayList<Integer>();
-	}
+		this.tiempos = new ArrayList<>();
+		this.nombrePartido = nombrePartido;
+		this.eventosPartidos = eventosPartidos;
+		this.listViewPartidos = listViewPartidos;
+		this.listViewEventos = listViewEventos;
+    }
 
 	public void run() {
 		//jornada se genera en el controlador
@@ -137,28 +151,39 @@ public class JornadaThread extends Thread{
 			}
 			
 			//una vez ha atacado Local o visitante, se comprueba quien gana
+			EventosPartido evPart;
 			if(atk>def) {		
 				frase = seleccionarResultado(tipoEvento[0].toString(), jugAtk);
 				if(jugAtk.getEquipo().getIdEquipo() == equipoLoc.getIdEquipo()) {
 					partido.setGolesLocal(partido.getGolesLocal() + 1);
 					golesLoc = golesLoc + 1;
 					bbdd.insertarPartido(partido);
-					EventosPartido evPart = new EventosPartido(jugAtk, partido, 90, tipoEvento[0].toString(), frase);
+					evPart = new EventosPartido(jugAtk, partido, 90, tipoEvento[0].toString(), frase);
 					bbdd.insertarEventoPartido(evPart);
 				}else {
 					partido.setGolesVisitante(partido.getGolesVisitante() + 1);
 					golesVis = golesVis +1;
 					bbdd.insertarPartido(partido);
-					EventosPartido evPart = new EventosPartido(jugAtk, partido, tiempos.get(i), tipoEvento[0].toString(), frase);
+					evPart = new EventosPartido(jugAtk, partido, tiempos.get(i), tipoEvento[0].toString(), frase);
 					bbdd.insertarEventoPartido(evPart);
 				}
 				
 			}else {
 				random = (int)(1 + Math.random()*4);
 				frase = seleccionarResultado(tipoEvento[random].toString(), jugDef);
-				EventosPartido evPart = new EventosPartido(jugDef, partido, tiempos.get(i), tipoEvento[random].toString(), frase);
+				evPart = new EventosPartido(jugDef, partido, tiempos.get(i), tipoEvento[random].toString(), frase);
 				bbdd.insertarEventoPartido(evPart);
 			}
+			
+			String evento = "Minuto " + (i * 2) + ": " + evPart.getDescripcion();
+			eventosPartidos.get(nombrePartido).add(evento);
+			Platform.runLater(() -> {
+                if (nombrePartido.equals(listViewPartidos.getSelectionModel().getSelectedItem())) {
+                    listViewEventos.getItems().add(evento);
+                }
+            });
+			
+			
 			try {
 				this.wait(2000);
 			} catch (InterruptedException e) {
@@ -240,6 +265,12 @@ public class JornadaThread extends Thread{
 
 		return frase;
 	}
+
+	public String getNombrePartido() {
+		return nombrePartido;
+	}
+	
+	
 
 
 
