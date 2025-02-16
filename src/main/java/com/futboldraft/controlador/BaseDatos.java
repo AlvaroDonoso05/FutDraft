@@ -17,7 +17,7 @@ public class BaseDatos {
 	public boolean isDBEmpty() {
 		boolean empty = true;
 		Session session = null;
-		long result;	
+		long result;
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
@@ -96,7 +96,9 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Jugador> query = session.createQuery("FROM Jugador WHERE nombre = "+ nombre + " AND posicion = " + posicion);
+			Query<Jugador> query = session.createQuery("FROM Jugador WHERE nombre = :nombre AND posicion = :posicion");
+			query.setParameter("nombre", nombre);
+			query.setParameter("posicion", posicion);
 			jugador = query.getSingleResult();
 			session.getTransaction().commit();
 		}catch(Exception e) {

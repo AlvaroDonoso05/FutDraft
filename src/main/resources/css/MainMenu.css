@@ -1,0 +1,71 @@
+.root {
+	-fx-font-family: "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif";
+}
+
+.separator {
+	-fx-background-color: transparent;
+	-fx-pref-height: 2px;
+	-fx-pref-width: 100%;
+	-fx-translate-y: 20px;
+	-fx-border-color: #908e9740;
+	-fx-border-width: 0 0 2px 0;
+	-fx-position: relative;
+	-fx-margin: 60px 60px 60px 60px;
+}
+
+.separator Label {
+	-fx-background-color: #1c1c2a;
+	-fx-text-fill: #908e97;
+	-fx-padding: 0 10px;
+	-fx-translate-y: -8px;
+	-fx-shape: "M 5, 5 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0";
+}
+
+.label-header {
+	-fx-text-fill: white;
+	-fx-font-size: 12px;
+	-fx-font-weight: bold;
+}
+
+.input-field {
+	-fx-background-color: #1E293B;
+	-fx-text-fill: white;
+	-fx-prompt-text-fill: #6B7280;
+	-fx-padding: 8px;
+	-fx-border-radius: 5px;
+}
+
+.checkbox {
+	-fx-text-fill: white;
+}
+
+.primary-button {
+	-fx-background-color: #2563EB;
+	-fx-text-fill: white;
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+	-fx-padding: 10px;
+	-fx-border-radius: 5px;
+}
+
+.primary-button:hover {
+	-fx-background-color: #1D4ED8;
+}
+
+.hyperlink {
+	-fx-text-fill: #93C5FD;
+}
+
+.secondary-button {
+	-fx-background-color: transparent;
+	-fx-border-color: #2563EB;
+	-fx-text-fill: #2563EB;
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+	-fx-padding: 10px;
+	-fx-border-radius: 5px;
+}
+
+.secondary-button:hover {
+	-fx-background-color: #1E293B;
+}

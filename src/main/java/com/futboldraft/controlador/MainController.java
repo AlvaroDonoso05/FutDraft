@@ -9,7 +9,9 @@ import javafx.util.Duration;
 
 public class MainController {
 
-	public static final String LOGIN = "/vistas/LoginUI.fxml";
+	public static final String LOGIN = "/vistas/MainMenu.fxml";
+	public static final String DRAFT = "/vistas/DraftUI.fxml";
+	public static final String LOADING = "/vistas/Loading.fxml";
 
 	private static MainController instance;
 	private Stage stage;
@@ -18,6 +20,8 @@ public class MainController {
 	private boolean fullscreen = false;
 	private int width = 1200;
 	private int height = 900;
+	
+	private String siguienteVista;
 
 	public static MainController firstInstance(Stage stage) {
 		if(instance == null) {
@@ -84,5 +88,13 @@ public class MainController {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public String getSiguienteVista() {
+		return siguienteVista;
+	}
+
+	public void setSiguienteVista(String siguienteVista) {
+		this.siguienteVista = siguienteVista;
 	}
 }
