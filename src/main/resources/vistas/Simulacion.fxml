@@ -19,22 +19,6 @@
       <StackPane fx:id="rootPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <bottom>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="110.0" fitWidth="187.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imagenes/Botones/btnSJornada.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="117.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" />
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0 - 0" wrappingWidth="235.13671875">
-                           <font>
-                              <Font name="Comic Sans MS Bold" size="87.0" />
-                           </font>
-                        </Text>
-                     </children></HBox>
-               </bottom>
                <center>
                   <GridPane BorderPane.alignment="CENTER">
                     <columnConstraints>
@@ -46,27 +30,70 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="partidosListView" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="eventosListView" prefHeight="583.0" prefWidth="396.0" GridPane.columnIndex="2" />
                      </children>
                   </GridPane>
                </center>
                <top>
                   <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Text fill="WHITE" layoutX="871.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 - 0" wrappingWidth="235.13671875">
+                        <Text fill="WHITE" layoutX="837.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 - 0" wrappingWidth="235.13671875">
                            <font>
                               <Font name="Comic Sans MS Bold" size="87.0" />
                            </font>
                         </Text>
-                        <ChoiceBox layoutX="39.0" layoutY="50.0" prefHeight="107.0" prefWidth="470.0" styleClass="custom-choicebox" />
+                        <ChoiceBox fx:id="choiceBoxJornadas" layoutX="39.0" layoutY="50.0" prefHeight="107.0" prefWidth="470.0" styleClass="custom-choicebox" />
                      </children>
                   </Pane>
                </top>
                <left>
                   <Pane prefHeight="600.0" prefWidth="36.0" BorderPane.alignment="CENTER" />
                </left>
+               <right>
+                  <Pane prefHeight="583.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+               </right>
             </BorderPane>
          </children>
       </StackPane>
    </center>
+   <bottom>
+      <BorderPane prefHeight="89.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <left>
+            <Pane prefHeight="117.0" prefWidth="524.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text fill="#22d32e" layoutX="65.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="128.13671875">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="87.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#22d32e" layoutX="188.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Minuto" wrappingWidth="321.13671875">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="87.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </left>
+         <center>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="btnSiguienteJornada" fitHeight="110.0" fitWidth="187.0" onMouseReleased="#enfrentamientosJornada" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/btnSJornada.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="btnSalir" fitHeight="117.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/btnSalir.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </center>
+         <right>
+            <Pane prefHeight="117.0" prefWidth="65.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </bottom>
 </BorderPane>
