@@ -1,25 +1,14 @@
 package com.futboldraft.controlador;
 
-import java.awt.Event;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import org.apache.log4j.chainsaw.Main;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 import com.futboldraft.modelo.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -30,13 +19,12 @@ import javafx.util.Duration;
 
 public class DraftController {
 	private BaseDatos bbdd = BaseDatos.getInstance();
-	private LoadingController lc;
 	
 	@FXML
 	private ImageView del1, del2, cen1, cen2, cen3, cen4, def1, def2, def3, def4, por1;
 	
 	@FXML
-	private ImageView btnEmpezar, btnSalir;
+	private ImageView btnEmpezar, btnSalir, btnReroll;
 	
 	@FXML
 	private BorderPane seleccionJugador;
@@ -93,6 +81,9 @@ public class DraftController {
 	private Image pasarEncimaImg_Estado1 = new Image(getClass().getResource("/imagenes/rotating_card_loop.gif").toExternalForm());
 	private Image pasarEncimaImg_Estado2 = new Image(getClass().getResource("/imagenes/default_selected.gif").toExternalForm());
 	
+	private Image btnReroll_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnReroll.png").toExternalForm());
+	private Image btnReroll_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnReroll_action.png").toExternalForm());
+	
 	private Image bronze_Estado1 = new Image(getClass().getResource("/imagenes/cards/cardBronzeP.png").toExternalForm());
 	private Image plata_Estado1 = new Image(getClass().getResource("/imagenes/cards/cardSilverP.png").toExternalForm());
 	private Image oro_Estado1 = new Image(getClass().getResource("/imagenes/cards/cardGoldP.png").toExternalForm());
@@ -124,35 +115,9 @@ public class DraftController {
 		mc = MainController.getInstance();
 		bbdd = BaseDatos.getInstance();
 		
-		if(bbdd.isDBEmpty()) {
-			CsvController csvContr = new CsvController();
-
-			List<JugadorCsv> jugadoresC = csvContr.abrirCSV();
-			List<Equipo> equipos = bbdd.selectEquiposByNombre("%");
-			List<String> equiposString = new ArrayList<String>();
-			
-			for(JugadorCsv jugadorC : jugadoresC) {
-				Jugador jugador = new Jugador(null, jugadorC.getNombre(), jugadorC.getPosicion(), jugadorC.getFuerzaAtaque(),
-						jugadorC.getFuerzaTecnica(), jugadorC.getFuerzaDefensa(), jugadorC.getFuerzaPortero());
-				bbdd.insertarJugador(jugador);
-				
-				for(Equipo equipoB: equipos) {
-					equiposString.add(equipoB.getNombre());
-				}
-				
-				if(!equiposString.contains(jugadorC.getEquipo())) {
-					equiposString.add(jugadorC.getEquipo());
-					bbdd.insertarEquipo(new Equipo(jugadorC.getEquipo()));
-				}
-			}
-		}
-		
-		bbdd.resetearJugadores();
-		
-		
-		
 		btnEmpezar.setImage(btnEmpezar_dis);
 		btnSalir.setImage(btnSalir_Estado1);
+		btnReroll.setImage(btnReroll_Estado1);
 		del1.setImage(pasarEncimaImg_Estado1);
 		del2.setImage(pasarEncimaImg_Estado1);
 		cen1.setImage(pasarEncimaImg_Estado1);
@@ -164,6 +129,8 @@ public class DraftController {
 		def3.setImage(pasarEncimaImg_Estado1);
 		def4.setImage(pasarEncimaImg_Estado1);
 		por1.setImage(pasarEncimaImg_Estado1);
+		
+		if(!mc.isAdmin()) btnReroll.setVisible(false);
 		
 		stdel1.setVisible(false);
 		stdel2.setVisible(false);
@@ -251,11 +218,12 @@ public class DraftController {
 			} else {
 				btnSalir.setImage(btnSalir_Estado1);
 			}
-		} else if(event.getSource() == test) {
-			List<Jugador> listaJugadores;
-			listaJugadores = sacarDraft("DEF");
-			rellenarJugadoresSeleccion(listaJugadores);
-						
+		} else if(event.getSource() == btnReroll) {
+			if (btnReroll.getImage().equals(btnReroll_Estado1)) {
+				btnReroll.setImage(btnReroll_Estado2);
+			} else {
+				btnReroll.setImage(btnReroll_Estado1);
+			}						
 		}
 	}
 	
@@ -274,6 +242,11 @@ public class DraftController {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+			} else if(event.getSource() == btnReroll) {
+				btnReroll.setImage(btnReroll_Estado1);
+				List<Jugador> listaJugadores;
+				listaJugadores = sacarDraft("DEF");
+				rellenarJugadoresSeleccion(listaJugadores);
 			}
 		}));
 		timeline.setCycleCount(1);
@@ -289,7 +262,6 @@ public class DraftController {
 		} else if(imageView.getImage() == pasarEncimaImg_Estado2) {
 			imageView.setImage(pasarEncimaImg_Estado1);
 		}
-		
 		if(imageView.getImage() == bronze_Estado1) {
 			imageView.setImage(bronze_Estado2);
 		} else if(imageView.getImage() == bronze_Estado2) {
@@ -403,7 +375,7 @@ public class DraftController {
 		jugador.setEquipo(equipoJugador);
 		bbdd.insertarJugador(jugador);
 		
-		double media = jugador.calcularMedia();
+		int media = jugador.calcularMedia();
 		
 		if(media >= 52) {
 			jugadorSeleccionado.setImage(mega_Estado1);
@@ -428,6 +400,17 @@ public class DraftController {
 		seleccionJugador.setVisible(false);
 		panelEstadisticaSeleccionado.setVisible(true);
 		
+		boolean todosVisibles = true;
+		
+		for(Pane estadistica: listaPaneEstadisticas) {
+			if(!estadistica.isVisible()) {
+				todosVisibles = false;
+			}
+		}
+		
+		if(todosVisibles) {
+			btnEmpezar.setImage(btnEmpezar_Estado1);
+		}
 		
 	}
 
@@ -435,7 +418,7 @@ public class DraftController {
 		for(int i = 0; i < listaJugadores.size(); i++) {
 			List<Text> estadistica = listaSEstadisticas.get(i);
 			Jugador jugador = listaJugadores.get(i);
-			double media = jugador.calcularMedia();
+			int media = jugador.calcularMedia();
 			
 			estadistica.get(0).setText(jugador.getNombre());
 			estadistica.get(1).setText(String.valueOf(media));

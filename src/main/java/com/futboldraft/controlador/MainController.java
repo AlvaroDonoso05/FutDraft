@@ -22,6 +22,7 @@ public class MainController {
 	private int height = 900;
 	
 	private String siguienteVista;
+	private boolean isAdmin;
 
 	public static MainController firstInstance(Stage stage) {
 		if(instance == null) {
@@ -96,5 +97,13 @@ public class MainController {
 
 	public void setSiguienteVista(String siguienteVista) {
 		this.siguienteVista = siguienteVista;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

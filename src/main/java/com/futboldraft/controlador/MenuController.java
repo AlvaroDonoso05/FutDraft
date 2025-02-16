@@ -82,6 +82,9 @@ public class MenuController {
 						if(checkCreeds()) {
 							tInfo.setText("¿Has olvidado la contraseña o necesitas crear una nueva?");
 							tInfo.setTextFill(Color.BLUE);
+							
+							mc.setAdmin(isAdmin());
+							
 							try {
 								mc.setSiguienteVista(MainController.DRAFT);
 								mc.cargarVista(MainController.LOADING);
@@ -116,6 +119,15 @@ public class MenuController {
 			if(entry.getKey().equals(tMail.getText()) && entry.getValue().equals(tPassword.getText())) {
 				return true;
 			}
+		}
+		
+		return false;
+	}
+	
+	private boolean isAdmin() {
+		
+		if("admin".equals(tMail.getText()) && creeds.get("admin").equals(tPassword.getText())) {
+			return true;
 		}
 		
 		return false;

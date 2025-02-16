@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -1133,7 +1132,11 @@
                                     <Font size="20.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="test" layoutX="20.0" layoutY="312.0" mnemonicParsing="false" onMousePressed="#clickBoton" text="Button" />
+                              <ImageView fx:id="btnReroll" fitHeight="52.0" fitWidth="123.0" layoutX="143.0" layoutY="312.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/Botones/btnReroll.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </Pane>
                      </children>
