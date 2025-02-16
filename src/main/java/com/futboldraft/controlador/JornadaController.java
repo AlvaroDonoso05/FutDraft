@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.futboldraft.modelo.*;
 
@@ -30,6 +31,9 @@ public class JornadaController {
 	private int contJorn, jorn;
 	private Equipo [][] eqEnfr;
 	private List<JornadaThread> lJornTh;
+	private List<Clasificacion> clasificaciones;
+	private DraftController draftC;
+	private boolean cambiarJug;
 	
 	@FXML
     private ChoiceBox<String> choiceBoxJornadas;
@@ -63,10 +67,12 @@ public class JornadaController {
 		lJornTh = new ArrayList<JornadaThread>();
 		equipos = bbdd.selectEquiposByNombre("%");
 		Collections.shuffle(equipos);
+		draftC = new DraftController();
 		List<Equipo> equipos = bbdd.selectEquiposByNombre("NombreEqJugador");//Cambiar a get de la otra clase
-		equipoJug = equipos.get(0);
+		equipoJug = draftC.getEquipoJugador();
 		Equipo eqTemp = equipos.set(0, equipoJug);
 		equipos.add(eqTemp);
+		cambiarJug = false;
 		
 		for(int i = 0; i<equipos.size(); i++) {
 			Clasificacion clas = new Clasificacion(equipos.get(i));
@@ -96,6 +102,7 @@ public class JornadaController {
 	//botonSiguiente Jornada, inicializar jornada a 0 a 1, decidir despues
 	@FXML
 	private void enfrentamientosJornada() {
+		cambiarJug = false;
 		if(jorn < 20) {
 			listaJornadas.add("Jornada " + jorn);
 			choiceBoxJornadas.setItems(listaJornadas);
@@ -122,9 +129,59 @@ public class JornadaController {
 			contJorn++;
 			jorn++;
 		}	
+		if(jorn%5 == 0) {
+			clasificaciones = bbdd.selectClasificacionOrdenada("DESC");
+			for(int i = 0; i < 3; i ++) {
+				if(clasificaciones.get(i).getEquipo().equals(equipoJug)) {
+					cambiarJug = true;
+				}
+			}
+		}
 	}
 	
+	public void hacerFichajes() {
+		Jugador jPor, jDef, jMed, jDel, jPor1, jDef1, jMed1, jDel1;
+		Set<Jugador> sJugadores = equipoJug.getJugadors();
+		List<Jugador> lJugadores = new ArrayList<Jugador>();
+		lJugadores.addAll(sJugadores);
+		List<Jugador> lJugadoresP = bbdd.jugadorPosicionLibre("POR");
+		List<Jugador> lJugadoresD = bbdd.jugadorPosicionLibre("DEF");
+		List<Jugador> lJugadoresM = bbdd.jugadorPosicionLibre("MED");
+		List<Jugador> lJugadoresDel = bbdd.jugadorPosicionLibre("DEL");
+		
+		jPor1 = lJugadoresP.get((int)(Math.random()*lJugadoresP.size()));
+		jDef1 = lJugadoresD.get((int)(Math.random()*lJugadoresD.size()));
+		jMed1 = lJugadoresM.get((int)(Math.random()*lJugadoresM.size()));
+		jDel = lJugadoresDel.get((int)(Math.random()*lJugadoresDel.size()));
+		
+		do {
+			jPor = lJugadores.get((int)(Math.random()*lJugadores.size()));
+		}while(!jPor.getPosicion().equalsIgnoreCase("POR"));
+		do {
+			jDef = lJugadores.get((int)(Math.random()*lJugadores.size()));
+		}while(!jDef.getPosicion().equalsIgnoreCase("DEF"));
+		do {
+			jMed = lJugadores.get((int)(Math.random()*lJugadores.size()));
+		}while(!jMed.getPosicion().equalsIgnoreCase("MED"));
+		do {
+			jDel = lJugadores.get((int)(Math.random()*lJugadores.size()));
+		}while(!jDel.getPosicion().equalsIgnoreCase("DEL"));	
+	}
 	
+	public void cambiarJugador(String nombre, String posicion, String nombre1, String posicion1) {
+		Jugador jug1 = bbdd.selectJugador(nombre, posicion);
+		Jugador jug2 = bbdd.selectJugador(nombre1, posicion1);
+		jug1.setEquipo(new Equipo(null));
+		jug2.setEquipo(equipoJug);
+		bbdd.insertarJugador(jug1);
+		bbdd.insertarJugador(jug2);		
+	}
+	
+	public void mostrarClasificacion(){
+	List<Clasificacion> clasificacion = bbdd.selectClasificacionOrdenada("DESC");
+	}
+	
+
 	@FXML
 	public void clickBoton(MouseEvent event) {
 		if(event.getSource() == btnSiguienteJornada) {
