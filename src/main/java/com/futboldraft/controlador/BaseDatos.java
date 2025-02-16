@@ -46,15 +46,42 @@ public class BaseDatos {
 	
 	
 	
-	public Clasificacion selectClasificacion(String criterio) {
+	public List<Clasificacion> selectClasificacionOrdenada(){
+		List<Clasificacion> clasificaciones = null;
+		
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Clasificacion> query = session.createQuery("FROM Clasificacion ORDER BY PUNTOS DESC");
+			clasificaciones = query.list();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}		
+		
+		return clasificaciones;
+	}
+	
+	public Clasificacion selectClasificacion(int idEquipo) {
 		Session session = null;
 		Clasificacion clasif;
 		
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Clasificacion> query = session.createQuery("FROM Clasificacion WHERE idEquipo LIKE :criterio");
-			query.setParameter("criterio", criterio);
+			Query<Clasificacion> query = session.createQuery("FROM Clasificacion WHERE idEquipo LIKE :idEquipo");
+			query.setParameter("idEquipo", idEquipo);
 			clasif = query.getSingleResult();
 			session.getTransaction().commit();
 		}catch(Exception e) {

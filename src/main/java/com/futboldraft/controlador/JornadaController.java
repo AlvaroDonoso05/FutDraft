@@ -58,9 +58,13 @@ public class JornadaController {
 			JornadaThread jornTh = new JornadaThread(false, eqEnfr[0][i], eqEnfr[1][i], jorn);
 			lJornTh.add(jornTh);
 			jornTh.start();
+	
 		}
 		contJorn++;
 		jorn++;
 	
+		bbdd.selectClasificacion(equipos.get(0).getIdEquipo());
+		
+		
 	}
 }
