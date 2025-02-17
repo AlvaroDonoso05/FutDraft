@@ -6,6 +6,7 @@ import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -49,11 +50,13 @@ public class MainController {
 	}
 
 	public void cargarVista(String vista) throws Exception {
+		Image icon = new Image(getClass().getResourceAsStream("/imagenes/logo.png"));
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(vista));
 		Parent root = loader.load();
 
 		Scene scene = new Scene(root);
 		stage.setTitle("FutDraft");
+		stage.getIcons().add(icon);
 		stage.setMinWidth(width);
 		stage.setMinHeight(height);
 		stage.setScene(scene);

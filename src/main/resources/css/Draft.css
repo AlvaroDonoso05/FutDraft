@@ -29,3 +29,54 @@
   -fx-background-position: center center;
   -fx-background-size: cover;
 }
+
+/* Estilo general para la sección de filtros */
+.filter-section {
+  -fx-background-color: #f0f0f0;
+  -fx-border-radius: 10;
+  -fx-padding: 15;
+  -fx-spacing: 20;
+  -fx-border-width: 1;
+  -fx-border-color: #b0b0b0;
+  -fx-effect: dropshadow(gaussian, #808080, 10, 0, 2, 2);
+  -fx-background-insets: 0 0 10 0;
+  -fx-alignment: CENTER;
+}
+
+/* Estilo de la etiqueta de filtros */
+.filter-label {
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #333333;
+  -fx-padding: 5 0;
+}
+
+/* Estilo del TextField para el filtro de nombre */
+.filter-textfield {
+  -fx-padding: 10px;
+  -fx-background-color: white;
+  -fx-border-color: #cccccc;
+  -fx-border-radius: 5;
+  -fx-focus-color: #66a3ff;
+  -fx-font-size: 14px;
+}
+
+/* Estilo del Slider */
+.filter-slider {
+  -fx-pref-width: 250px;
+  -fx-padding: 10px 0;
+}
+
+/* Estilo de la etiqueta de puntuación */
+.filter-slider .tick-label {
+  -fx-font-size: 12px;
+  -fx-text-fill: #666666;
+}
+
+/* Estilo de la tabla */
+.table-view {
+  -fx-background-color: white;
+  -fx-border-color: #b0b0b0;
+  -fx-border-radius: 5;
+  -fx-padding: 10px;
+}

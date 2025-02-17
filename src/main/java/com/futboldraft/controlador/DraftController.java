@@ -9,8 +9,15 @@ import com.futboldraft.modelo.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,10 +33,10 @@ public class DraftController {
 	private ImageView del1, del2, cen1, cen2, cen3, cen4, def1, def2, def3, def4, por1;
 	
 	@FXML
-	private ImageView btnEmpezar, btnSalir, btnReroll;
+	private ImageView btnEmpezar, btnSalir, btnReroll, btnClasificacion;
 	
 	@FXML
-	private BorderPane seleccionJugador;
+	private BorderPane seleccionJugador, pClasificacion;
 
 	@FXML
 	private Text tNombreS1, tMediaS1, tAtaqS1, tDefS1, tTecS1, tPorS1, tPosS1;
@@ -69,7 +76,20 @@ public class DraftController {
 	private Pane stdel1, stdel2, stcen1, stcen2, stcen3, stcen4, stdef1, stdef2, stdef3, stdef4, stpor1;
 	
 	@FXML
+	private TextField nombreFilter;
+	
+	@FXML
 	private ImageView sel1, sel2, sel3, sel4, sel5;
+	
+	@FXML
+	private TableView<ClasificacionTabla> tableView;
+	
+	@FXML
+	private TableColumn<ClasificacionTabla, Integer> colId, colAtaque, colTecnica, colDefensa, colPortero;
+	@FXML
+	private TableColumn<ClasificacionTabla, String> colEquipo, colNombre, colPosicion;
+	
+	private ObservableList<ClasificacionTabla> listaOriginal;
 	
 	@FXML
 	private Button test;
@@ -85,6 +105,9 @@ public class DraftController {
 	
 	private Image btnReroll_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnReroll.png").toExternalForm());
 	private Image btnReroll_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnReroll_action.png").toExternalForm());
+	
+	private Image btnClasificacion_Estado1 = new Image(getClass().getResource("/imagenes/Botones/leaderboard.png").toExternalForm());
+	private Image btnClasificacion_Estado2 = new Image(getClass().getResource("/imagenes/Botones/leaderboard_action.png").toExternalForm());
 	
 	private Image bronze_Estado1 = new Image(getClass().getResource("/imagenes/cards/cardBronzeP.png").toExternalForm());
 	private Image plata_Estado1 = new Image(getClass().getResource("/imagenes/cards/cardSilverP.png").toExternalForm());
@@ -113,14 +136,24 @@ public class DraftController {
 
 	@FXML
 	public void initialize() {
-		
 		mc = MainController.getInstance();
 		bbdd = BaseDatos.getInstance();
 		
+
 		bbdd.borrarEventosPartido();
 		bbdd.borrarPartido();
 		bbdd.borrarJornada();
 		bbdd.borrarClasificacion();
+
+		colId.setCellValueFactory(new PropertyValueFactory<>("idJugador"));
+		colEquipo.setCellValueFactory(new PropertyValueFactory<>("equipo"));
+		colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+		colPosicion.setCellValueFactory(new PropertyValueFactory<>("posicion"));
+		colAtaque.setCellValueFactory(new PropertyValueFactory<>("fAtaque"));
+		colTecnica.setCellValueFactory(new PropertyValueFactory<>("fTecnica"));
+		colDefensa.setCellValueFactory(new PropertyValueFactory<>("fDefensa"));
+		colPortero.setCellValueFactory(new PropertyValueFactory<>("fPortero"));
+
 		
 		btnEmpezar.setImage(btnEmpezar_dis);
 		btnSalir.setImage(btnSalir_Estado1);
@@ -182,7 +215,65 @@ public class DraftController {
 		listaImgSeleccion = List.of(sel1, sel2, sel3, sel4, sel5);
 		listaPaneEstadisticas = List.of(stdel1, stdel2, stcen1, stcen2, stcen3, stcen4, stdef1, stdef2, stdef3, stdef4, stpor1);
 		
+		obtenerClasificacion();
+		
 	}
+	
+	public void obtenerClasificacion() {
+	    Task<ObservableList<ClasificacionTabla>> task = new Task<>() {
+	        @Override
+	        protected ObservableList<ClasificacionTabla> call() {
+	            listaOriginal = bbdd.obtenerClasificaciones();
+	            System.out.println("Datos obtenidos: " + listaOriginal);  // Verifica que la lista no esté vacía
+	            return listaOriginal;
+	        }
+	    };
+
+	    task.setOnSucceeded(event -> {
+	        ObservableList<ClasificacionTabla> data = task.getValue();
+	        if (data != null && !data.isEmpty()) {
+	            // Refrescar la tabla con los nuevos datos
+	            tableView.setItems(data);
+	            System.out.println("Tabla actualizada con los datos.");
+	        } else {
+	            System.out.println("No se han obtenido datos válidos.");
+	        }
+	    });
+
+	    task.setOnFailed(event -> {
+	        System.out.println("Error en la tarea de obtener clasificación.");
+	        Throwable exception = task.getException();
+	        exception.printStackTrace();
+	    });
+
+	    // Ejecutar la tarea en un hilo separado
+	    new Thread(task).start();
+	}
+	
+	private void actualizarClasificacion(int idJugador, String equipo) {
+		for (ClasificacionTabla item : listaOriginal) {
+		    if (item.getIdJugador() == idJugador) {
+		    	System.out.println(idJugador + " " + equipo + " dbhrgrfajbhjiijsfdbhjoij");
+		    	item.setEquipo(equipo);
+		        break;
+		    }
+		}
+	}
+
+	
+	@FXML
+	private void aplicarFiltro() {
+		String nombreBusqueda = nombreFilter.getText().toLowerCase();
+
+		ObservableList<ClasificacionTabla> listaFiltrada = FXCollections.observableArrayList();
+		for (ClasificacionTabla item : listaOriginal) {
+			if (item.getNombre().toLowerCase().contains(nombreBusqueda)) {
+				listaFiltrada.add(item);
+			}
+		}
+
+		tableView.setItems(listaFiltrada);
+	}	
 	
 	public List<Jugador> sacarDraft(String posicion) {
 		List<Jugador> jugadoresD = new ArrayList<Jugador>();
@@ -232,6 +323,12 @@ public class DraftController {
 			} else {
 				btnReroll.setImage(btnReroll_Estado1);
 			}						
+		} else if(event.getSource() == btnClasificacion) {
+			if (btnClasificacion.getImage().equals(btnClasificacion_Estado1)) {
+				btnClasificacion.setImage(btnClasificacion_Estado2);
+			} else {
+				btnClasificacion.setImage(btnClasificacion_Estado1);
+			}
 		}
 	}
 	
@@ -259,8 +356,15 @@ public class DraftController {
 			} else if(event.getSource() == btnReroll) {
 				btnReroll.setImage(btnReroll_Estado1);
 				List<Jugador> listaJugadores;
-				listaJugadores = sacarDraft("DEF");
+				listaJugadores = bbdd.jugadorPosicionRand("DEF");
 				rellenarJugadoresSeleccion(listaJugadores);
+			} else if(event.getSource() == btnClasificacion) {
+				btnClasificacion.setImage(btnClasificacion_Estado1);
+				if(pClasificacion.isVisible()) {
+					pClasificacion.setVisible(false);
+				} else {
+					pClasificacion.setVisible(true);
+				}
 			}
 		}));
 		timeline.setCycleCount(1);
@@ -276,6 +380,7 @@ public class DraftController {
 		} else if(imageView.getImage() == pasarEncimaImg_Estado2) {
 			imageView.setImage(pasarEncimaImg_Estado1);
 		}
+		
 		if(imageView.getImage() == bronze_Estado1) {
 			imageView.setImage(bronze_Estado2);
 		} else if(imageView.getImage() == bronze_Estado2) {
@@ -305,57 +410,57 @@ public class DraftController {
 		
 		if(jugadorSeleccionado.getImage() == pasarEncimaImg_Estado1 || jugadorSeleccionado.getImage() == pasarEncimaImg_Estado2) {
 			if(event.getSource() == del1) {
-			    listaJugadores = sacarDraft("DEL");
+			    listaJugadores = bbdd.jugadorPosicionRand("DEL");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(0);
 			    estadisticaSeleccionada = listaEstadisticas.get(0);
 			} else if(event.getSource() == del2) {
-			    listaJugadores = sacarDraft("DEL");
+			    listaJugadores = bbdd.jugadorPosicionRand("DEL");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(1);
 			    estadisticaSeleccionada = listaEstadisticas.get(1);
 			} else if(event.getSource() == cen1) {
-			    listaJugadores = sacarDraft("MED");
+			    listaJugadores = bbdd.jugadorPosicionRand("MED");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(2);
 			    estadisticaSeleccionada = listaEstadisticas.get(2);
 			} else if(event.getSource() == cen2) {
-			    listaJugadores = sacarDraft("MED");
+			    listaJugadores = bbdd.jugadorPosicionRand("MED");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(3);
 			    estadisticaSeleccionada = listaEstadisticas.get(3);
 			} else if(event.getSource() == cen3) {
-			    listaJugadores = sacarDraft("MED");
+			    listaJugadores = bbdd.jugadorPosicionRand("MED");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(4);
 			    estadisticaSeleccionada = listaEstadisticas.get(4);
 			} else if(event.getSource() == cen4) {
-			    listaJugadores = sacarDraft("MED");
+			    listaJugadores = bbdd.jugadorPosicionRand("MED");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(5);
 			    estadisticaSeleccionada = listaEstadisticas.get(5);
 			} else if(event.getSource() == def1) {
-			    listaJugadores = sacarDraft("DEF");
+			    listaJugadores = bbdd.jugadorPosicionRand("DEF");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(6);
 			    estadisticaSeleccionada = listaEstadisticas.get(6);
 			} else if(event.getSource() == def2) {
-			    listaJugadores = sacarDraft("DEF");
+			    listaJugadores = bbdd.jugadorPosicionRand("DEF");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(7);
 			    estadisticaSeleccionada = listaEstadisticas.get(7);
 			} else if(event.getSource() == def3) {
-			    listaJugadores = sacarDraft("DEF");
+			    listaJugadores = bbdd.jugadorPosicionRand("DEF");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(8);
 			    estadisticaSeleccionada = listaEstadisticas.get(8);
 			} else if(event.getSource() == def4) {
-			    listaJugadores = sacarDraft("DEF");
+			    listaJugadores = bbdd.jugadorPosicionRand("DEF");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(9);
 			    estadisticaSeleccionada = listaEstadisticas.get(9);
 			} else if(event.getSource() == por1) {
-			    listaJugadores = sacarDraft("POR");
+			    listaJugadores = bbdd.jugadorPosicionRand("POR");
 			    rellenarJugadoresSeleccion(listaJugadores);
 			    panelEstadisticaSeleccionado = listaPaneEstadisticas.get(10);
 			    estadisticaSeleccionada = listaEstadisticas.get(10);
@@ -388,6 +493,7 @@ public class DraftController {
 		
 		jugador.setEquipo(equipoJugador);
 		bbdd.insertarJugador(jugador);
+		actualizarClasificacion(jugador.getIdJugador(), equipoJugador.getNombre());
 		
 		int media = jugador.calcularMedia();
 		
@@ -424,8 +530,7 @@ public class DraftController {
 		
 		if(todosVisibles) {
 			btnEmpezar.setImage(btnEmpezar_Estado1);
-		}
-		
+		}		
 	}
 
 	private void rellenarJugadoresSeleccion(List<Jugador> listaJugadores) {
