@@ -10,6 +10,9 @@ import org.hibernate.query.Query;
 
 import com.futboldraft.modelo.*;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class BaseDatos {
 	private SessionFactory sessionFactory;
 	private static BaseDatos instance;
@@ -73,6 +76,51 @@ public class BaseDatos {
 		}		
 		
 		return clasificaciones;
+	}
+	
+	public ObservableList<ClasificacionTabla> obtenerClasificaciones() {
+	    ObservableList<ClasificacionTabla> jugadoresClasificacion = FXCollections.observableArrayList();
+	    List<Jugador> jugadores;
+
+	    Session session = null;
+
+	    try {
+	        session = sessionFactory.getCurrentSession();
+	        session.beginTransaction();
+
+	        // Usar JOIN FETCH para asegurarse de que el equipo se cargue con el jugador
+	        String hql = "FROM Jugador j LEFT JOIN FETCH j.equipo";
+	        Query<Jugador> query = session.createQuery(hql, Jugador.class);
+	        jugadores = query.list();
+
+	        session.getTransaction().commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        if (null != session) {
+	            session.getTransaction().rollback();
+	        }
+	        throw e;
+	    } finally {
+	        if (null != session) {
+	            session.close();
+	        }
+	    }
+
+	    for (Jugador jugador : jugadores) {
+	        ClasificacionTabla clasificacion = new ClasificacionTabla(
+	            jugador.getIdJugador(),
+	            jugador.getEquipo() != null ? jugador.getEquipo().getNombre() : "Desconocido",
+	            jugador.getNombre(),
+	            jugador.getPosicion(),
+	            jugador.getFuerzaAtaque(),
+	            jugador.getFuerzaTecnica(),
+	            jugador.getFuerzaDefensa(),
+	            jugador.getFuerzaPortero()
+	        );
+	        jugadoresClasificacion.add(clasificacion);
+	    }
+
+	    return jugadoresClasificacion;
 	}
 	
 	public Clasificacion selectClasificacion(int idEquipo) {
@@ -248,6 +296,33 @@ public class BaseDatos {
 			session.beginTransaction();
 			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE posicion = :posicion");
 			query.setParameter("posicion", posicion);
+			jugadoresP = query.list();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}
+		return jugadoresP;
+	}
+	
+	public List<Jugador> jugadorPosicionRand(String posicion) {
+		Session session = null;
+		List<Jugador> jugadoresP = null;
+
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE posicion = :posicion ORDER BY RAND()");
+			query.setParameter("posicion", posicion);
+			query.setMaxResults(5);
 			jugadoresP = query.list();
 			session.getTransaction().commit();
 		}catch(Exception e) {
