@@ -117,6 +117,11 @@ public class DraftController {
 		mc = MainController.getInstance();
 		bbdd = BaseDatos.getInstance();
 		
+		bbdd.borrarEventosPartido();
+		bbdd.borrarPartido();
+		bbdd.borrarJornada();
+		bbdd.borrarClasificacion();
+		
 		btnEmpezar.setImage(btnEmpezar_dis);
 		btnSalir.setImage(btnSalir_Estado1);
 		btnReroll.setImage(btnReroll_Estado1);
@@ -152,6 +157,7 @@ public class DraftController {
 		
 		int random = (int) (Math.random() * listaEquipos.size());
 		equipoJugador = listaEquipos.get(random);
+		mc.setEquipoJug(equipoJugador);
 		
 		listaSEstadisticas = new ArrayList<>();
 		listaSEstadisticas.add(List.of(tNombreS1, tMediaS1, tAtaqS1, tDefS1, tTecS1, tPorS1, tPosS1));

@@ -50,17 +50,18 @@ public class PartidoThread extends Thread{
 	public void run() {
 		//jornada se genera en el controlador
 
-		int statsTLoc = 0, statsTVis = 0, atkL = 8, defL = 8, atkV = 8, defV = 8, atk = 0, def = 0, random;
-		String frase="";
-		Set<Jugador> jugadoresSetLoc = equipoLoc.getJugadors();
-		List<Jugador> lJugadoresLoc = new ArrayList<Jugador>();
-		lJugadoresLoc.addAll(jugadoresSetLoc);
-		Jugador jugAtk = null, jugDef = null;
 		tipoEventoEnum[] tipoEvento = tipoEventoEnum.values();
+		int statsTLoc = 0, statsTVis = 0, atkL = 8, defL = 8, atkV = 8, defV = 8, atk = 0, def = 0, random, idEquipo;
+		Jugador jugAtk = null, jugDef = null;
+		String frase="";
+		
+		idEquipo = equipoLoc.getIdEquipo();
+		List<Jugador> lJugadoresLoc = new ArrayList<Jugador>();
+		lJugadoresLoc = bbdd.selectJugadoresEquipo(idEquipo);
 
-		Set<Jugador> jugadoresSetVis = equipoVis.getJugadors();
+		idEquipo = equipoVis.getIdEquipo();
 		List<Jugador> lJugadoresVis = new ArrayList<Jugador>();
-		lJugadoresVis.addAll(jugadoresSetVis);
+		lJugadoresVis = bbdd.selectJugadoresEquipo(idEquipo);
 		
 		//crear timestamps aleatorios
 		for(int i=0; i<16; i++) {
@@ -74,7 +75,8 @@ public class PartidoThread extends Thread{
 		partido.setEquipoByIdEquipoVisitante(equipoVis);
 		partido.setGolesLocal(golesLoc);
 		partido.setGolesVisitante(golesVis);
-		partido.setJornada(new Jornada(idJornada));
+		Jornada jorn = bbdd.selectJornada(idJornada);
+		partido.setJornada(jorn);
 		bbdd.insertarPartido(partido);
 
 		for(int i = 0; i<lJugadoresLoc.size();i++) {
