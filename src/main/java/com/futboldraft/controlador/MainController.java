@@ -1,5 +1,7 @@
 package com.futboldraft.controlador;
 
+import com.futboldraft.modelo.Equipo;
+
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +27,7 @@ public class MainController {
 	
 	private String siguienteVista;
 	private boolean isAdmin;
+	private Equipo equipoJug;
 
 	public static MainController firstInstance(Stage stage) {
 		if(instance == null) {
@@ -110,4 +113,14 @@ public class MainController {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
+
+	public Equipo getEquipoJug() {
+		return equipoJug;
+	}
+
+	public void setEquipoJug(Equipo equipoJug) {
+		this.equipoJug = equipoJug;
+	}
+	
+	
 }

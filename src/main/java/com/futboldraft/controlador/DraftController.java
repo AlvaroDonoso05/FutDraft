@@ -139,6 +139,12 @@ public class DraftController {
 		mc = MainController.getInstance();
 		bbdd = BaseDatos.getInstance();
 		
+
+		bbdd.borrarEventosPartido();
+		bbdd.borrarPartido();
+		bbdd.borrarJornada();
+		bbdd.borrarClasificacion();
+
 		colId.setCellValueFactory(new PropertyValueFactory<>("idJugador"));
 		colEquipo.setCellValueFactory(new PropertyValueFactory<>("equipo"));
 		colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -147,6 +153,7 @@ public class DraftController {
 		colTecnica.setCellValueFactory(new PropertyValueFactory<>("fTecnica"));
 		colDefensa.setCellValueFactory(new PropertyValueFactory<>("fDefensa"));
 		colPortero.setCellValueFactory(new PropertyValueFactory<>("fPortero"));
+
 		
 		btnEmpezar.setImage(btnEmpezar_dis);
 		btnSalir.setImage(btnSalir_Estado1);
@@ -183,6 +190,7 @@ public class DraftController {
 		
 		int random = (int) (Math.random() * listaEquipos.size());
 		equipoJugador = listaEquipos.get(random);
+		mc.setEquipoJug(equipoJugador);
 		
 		listaSEstadisticas = new ArrayList<>();
 		listaSEstadisticas.add(List.of(tNombreS1, tMediaS1, tAtaqS1, tDefS1, tTecS1, tPorS1, tPosS1));

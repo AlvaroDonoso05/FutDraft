@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import com.futboldraft.modelo.*;
@@ -26,7 +27,7 @@ public class BaseDatos {
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
 			
-			String hql = "SELECT COUNT(*) FROM Equipo";
+			String hql = "SELECT COUNT(*) FROM Jugador";
 	        Query<Long> query = session.createQuery(hql, Long.class);
 			result = query.uniqueResult();
 			session.getTransaction().commit();
@@ -149,6 +150,61 @@ public class BaseDatos {
 		return clasif;
 	}
 	
+	public void borrarClasificacion() {
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query query = session.createQuery("DELETE Clasificacion");
+			query.executeUpdate();	
+			NativeQuery<?> query2 = session.createNativeQuery("ALTER TABLE CLASIFICACION AUTO_INCREMENT = 1");
+			query2.executeUpdate();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}
+	}
+	
+	public boolean isClasifEmpty() {
+		boolean empty = true;
+		Session session = null;
+		long result;
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			
+			String hql = "SELECT COUNT(*) FROM Clasificacion";
+	        Query<Long> query = session.createQuery(hql, Long.class);
+			result = query.uniqueResult();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+		if(result > 0) {
+			empty = false;
+		}		
+		return empty;
+	}
+	
 	public void insertarEventoPartido(EventosPartido eventoPartido) {
 		Session session = null;
 		
@@ -267,6 +323,110 @@ public class BaseDatos {
 		return jugador;
 	}
 	
+	public void borrarJornada() {
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query query = session.createQuery("DELETE Jornada");
+			query.executeUpdate();		
+			NativeQuery<?> query2 = session.createNativeQuery("ALTER TABLE JORNADA AUTO_INCREMENT = 1");
+			query2.executeUpdate();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}
+		
+	}
+	
+	public void borrarEventosPartido() {
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query query = session.createQuery("DELETE EventosPartido");
+			query.executeUpdate();		
+			NativeQuery<?> query2 = session.createNativeQuery("ALTER TABLE EVENTOS_PARTIDO AUTO_INCREMENT = 1");
+			query2.executeUpdate();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+		
+	}
+	public void borrarPartido() {
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query query = session.createQuery("DELETE Partido");
+			query.executeUpdate();		
+			NativeQuery<?> query2 = session.createNativeQuery("ALTER TABLE PARTIDO AUTO_INCREMENT = 1");
+			query2.executeUpdate();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}	
+		
+	}
+	
+	public List<Jugador> selectJugadoresEquipo(int idEquipo) {
+		List<Jugador> jugadores = null;
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Jugador> query = session.createQuery("FROM Jugador WHERE equipo.idEquipo = :idEquipo");
+			query.setParameter("idEquipo", idEquipo);
+			jugadores = query.list();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}		
+		
+		
+		return jugadores;
+	}
+	
 	public synchronized void insertarEquipo(Equipo equipo) {
 		Session session = null;
 		try{
@@ -347,7 +507,7 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE equipo.nombre IS NULL AND posicion = :posicion" );
+			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE equipo IS NULL AND posicion = :posicion" );
 			query.setParameter("posicion", posicion);
 			jugadoresP = query.list();
 			session.getTransaction().commit();
@@ -413,6 +573,63 @@ public class BaseDatos {
 		
 		
 		return equipos;
+	}
+	
+	
+	public List<Equipo> selectEquiposSinEqJug(int idEqJug){
+		
+		List<Equipo> equipos = null;	
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Equipo> query = session.createQuery("FROM Equipo WHERE idEquipo != :idEqJug");
+			query.setParameter("idEqJug", idEqJug);
+			equipos = query.list();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}		
+
+		return equipos;
+		
+	}
+	
+	public Jornada selectJornada(int idJornada) {
+		Session session = null;
+		Jornada jorn;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Jornada> query = session.createQuery("FROM Jornada WHERE idJornada = :idJornada");
+			query.setParameter("idJornada", idJornada);
+			jorn = query.getSingleResult();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}		
+
+		return jorn;
 	}
 	
 	public List<String> selectEventosByPartido(Partido criterio) {

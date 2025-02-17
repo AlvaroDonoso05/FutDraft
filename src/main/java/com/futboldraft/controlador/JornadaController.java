@@ -59,22 +59,38 @@ public class JornadaController {
     private final Map<String, List<String>> eventosPartidos = new HashMap<>();
 	
 	@FXML
-	private void intialize() {
+	private void initialize() {
 		mc = MainController.getInstance();
 		contJorn = 0;
 		jorn = 1;
 		eqEnfr = new Equipo[10][2];
 		equipos = bbdd.selectEquiposByNombre("%");
+		equipoJug = mc.getEquipoJug();
+		List<Equipo> equiposSinJug = bbdd.selectEquiposSinEqJug(equipoJug.getIdEquipo());
+		equipos2 = new ArrayList<Equipo>();
+		
+		for(Equipo equipo: equiposSinJug) {
+				DraftTeamThread dTT = new DraftTeamThread(equipo);	
+				dTT.start();
+		}
+		
 		Collections.shuffle(equipos);
-		draftC = new DraftController();
-		List<Equipo> equipos = bbdd.selectEquiposByNombre("NombreEqJugador");//Cambiar a get de la otra clase
-		equipoJug = draftC.getEquipoJugador();
+		Equipo eqEl = null;
+		for(Equipo equipo2 : equipos) {
+			if(equipo2.getIdEquipo() == equipoJug.getIdEquipo()) {
+				eqEl = equipo2;
+			}
+		}
+		equipos.remove(eqEl);
+		
 		Equipo eqTemp = equipos.set(0, equipoJug);
 		equipos.add(eqTemp);
 		cambiarJug = false;
 		
+		bbdd.borrarClasificacion();
 		for(int i = 0; i<equipos.size(); i++) {
 			Clasificacion clas = new Clasificacion(equipos.get(i));
+			clas.setIdEquipo(equipos.get(i).getIdEquipo());
 			bbdd.insertarClasificacion(clas);
 		}
 		for(int i = 0; i<10; i++){
