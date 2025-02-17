@@ -1,5 +1,7 @@
 package com.futboldraft.controlador;
 
+import java.util.List;
+
 import com.futboldraft.modelo.Equipo;
 
 import javafx.animation.FadeTransition;
@@ -28,6 +30,7 @@ public class MainController {
 	private String siguienteVista;
 	private boolean isAdmin;
 	private Equipo equipoJug;
+	private List<Equipo> equiposDraft;
 
 	public static MainController firstInstance(Stage stage) {
 		if(instance == null) {
@@ -121,6 +124,15 @@ public class MainController {
 	public void setEquipoJug(Equipo equipoJug) {
 		this.equipoJug = equipoJug;
 	}
+
+	public List<Equipo> getEquiposDraft() {
+		return equiposDraft;
+	}
+
+	public void setEquiposDraft(List<Equipo> equiposDraft) {
+		this.equiposDraft = equiposDraft;
+	}
+	
 	
 	
 }

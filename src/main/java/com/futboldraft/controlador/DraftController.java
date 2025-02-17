@@ -339,6 +339,8 @@ public class DraftController {
 				if(!btnEmpezar.getImage().equals(btnEmpezar_dis)) {
 					btnEmpezar.setImage(btnEmpezar_Estado1);
 					mc.setSiguienteVista(MainController.SIMULACION);
+					mc.setEquiposDraft(bbdd.selectEquiposSinEqJug(equipoJugador.getIdEquipo()));
+					
 					try {
 						mc.cargarVista(MainController.LOADING);
 					} catch (Exception e1) {

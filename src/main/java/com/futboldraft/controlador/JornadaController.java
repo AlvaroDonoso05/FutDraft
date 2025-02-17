@@ -69,11 +69,6 @@ public class JornadaController {
 		List<Equipo> equiposSinJug = bbdd.selectEquiposSinEqJug(equipoJug.getIdEquipo());
 		equipos2 = new ArrayList<Equipo>();
 		
-		for(Equipo equipo: equiposSinJug) {
-				DraftTeamThread dTT = new DraftTeamThread(equipo);	
-				dTT.start();
-		}
-		
 		Collections.shuffle(equipos);
 		Equipo eqEl = null;
 		for(Equipo equipo2 : equipos) {
@@ -132,23 +127,39 @@ public class JornadaController {
 	        
 	        List<PartidoThread> partidos = new ArrayList<>();
 	        List<String> nombresPartidos = new ArrayList<>();
-			
+			//local
 			if(contJorn%2==0) {
 				for(int i = 0; i<equipos.size();i++) {	
-					eqEnfr[i][0] = equipos.get(i);
-					eqEnfr[i][1] = equipos2.get(i + contJorn);			
+					if(i + contJorn<equipos.size()) {
+						eqEnfr[i][0] = equipos.get(i);
+						eqEnfr[i][1] = equipos2.get(i + contJorn);		
+					}else {
+						eqEnfr[i][0] = equipos.get(i);
+						eqEnfr[i][1] = equipos2.get((i + contJorn)%10);
+					}
+						
 				}
-			}else {	
+			//visitante
+			}else {
+				System.out.println(equipos.size());
 				for(int i = 0; i<equipos.size();i++) {
-					eqEnfr[i][1] = equipos.get(i);
-					eqEnfr[i][0] = equipos2.get(i + contJorn);
+					if(i + contJorn<equipos.size()) {
+						eqEnfr[i][1] = equipos.get(i);
+						eqEnfr[i][0] = equipos2.get(i);
+					}else {
+						eqEnfr[i][1] = equipos.get(i);
+						eqEnfr[i][0] = equipos2.get((i + contJorn)%10);
+					}
+					
 				}
 			}
 			
-			for (int i = 0; i < eqEnfr[0].length; i++) {
-	            String partidoNombre = "Equipo" + (i * 2 + 1) + " vs Equipo" + (i * 2 + 2);
+			for (int i = 0; i <eqEnfr.length; i++) {
+				System.out.println(eqEnfr.length);
+				System.out.println(eqEnfr[i][0].getNombre() + " " + eqEnfr[i][1].getNombre());
+	            String partidoNombre = eqEnfr[i][0].getNombre() + " vs " + eqEnfr[i][1].getNombre();
 	            nombresPartidos.add(partidoNombre);
-	            PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[0][i], eqEnfr[1][i], jorn, eventosPartidos, listViewPartidos, listViewEventos);
+	            PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[i][0], eqEnfr[i][1], jorn, eventosPartidos, listViewPartidos, listViewEventos);
 	            partidos.add(partido);
 	            eventosPartidos.put(partidoNombre, new ArrayList<>());
 	        }
@@ -174,6 +185,7 @@ public class JornadaController {
 			
 			contJorn++;
 			jorn++;
+
 		}	
 		if(jorn%5 == 0) {
 			clasificaciones = bbdd.selectClasificacionOrdenada("DESC");
