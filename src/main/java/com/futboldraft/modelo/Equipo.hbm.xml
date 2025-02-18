@@ -15,7 +15,7 @@
         </property>
 
         <!-- Relación uno a muchos con Jugadores (relación inversa) -->
-        <set fetch="select" inverse="true" lazy="true" name="jugadors" table="JUGADOR">
+        <set fetch="select" inverse="true" lazy="false" name="jugadors" table="JUGADOR">
             <key>
                 <column name="ID_EQUIPO"/>
             </key>

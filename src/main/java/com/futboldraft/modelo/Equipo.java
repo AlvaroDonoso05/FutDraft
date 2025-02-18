@@ -21,7 +21,6 @@ public class Equipo  implements java.io.Serializable {
      private Set partidosForIdEquipoVisitante = new HashSet(0);
      private Clasificacion clasificacion;
      private Set partidosForIdEquipoLocal = new HashSet(0);
-     private BaseDatos bbdd = BaseDatos.getInstance();
 
     public Equipo() {
     }
