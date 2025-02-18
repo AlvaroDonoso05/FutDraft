@@ -34,6 +34,7 @@ public class JornadaController {
 	private List<Clasificacion> clasificaciones;
 	private DraftController draftC;
 	private boolean cambiarJug;
+	private List<PartidoThread> partidos;
 	
 	@FXML
     private ChoiceBox<String> choiceBoxJornadas;
@@ -85,6 +86,10 @@ public class JornadaController {
 		for(int i = 0; i<equipos.size(); i++) {
 			Clasificacion clas = new Clasificacion(equipos.get(i));
 			clas.setIdEquipo(equipos.get(i).getIdEquipo());
+			clas.setGolesContra(0);
+			clas.setGolesFavor(0);
+			clas.setPartidosJugados(0);
+			clas.setPuntos(0);
 			bbdd.insertarClasificacion(clas);
 		}
 		
@@ -94,6 +99,10 @@ public class JornadaController {
 	        if (newVal != null) {
 	            int jornadaSeleccionada = Integer.parseInt(newVal.replace("Jornada ", ""));
 	            mostrarJornada(jornadaSeleccionada);
+	            int golesLoc = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesLoc();
+	            int golesVis = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesVis();
+	            txtContador.setText(golesLoc + " - "+ golesVis);
+	            
 	        }
 	    });
 		
@@ -121,7 +130,7 @@ public class JornadaController {
 			choiceBoxJornadas.getItems().add("Jornada " + jorn);
 	        choiceBoxJornadas.setValue("Jornada " + jorn);
 	        
-	        List<PartidoThread> partidos = new ArrayList<>();
+	        partidos = new ArrayList<>();
 	        List<String> nombresPartidos = new ArrayList<>();
 	        for (int i = 0; i < 19; i++) {
 	        	//local
@@ -149,7 +158,7 @@ public class JornadaController {
 				System.out.println(eqEnfr[i][0].getNombre() + " " + eqEnfr[i][1].getNombre());
 	            String partidoNombre = eqEnfr[i+(10*contJorn)][0].getNombre() + " vs " + eqEnfr[i+(10*contJorn)][1].getNombre();
 	            nombresPartidos.add(partidoNombre);
-	            PartidoThread partido = new PartidoThread(partidoNombre, true, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos);
+	            PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador);
 	            partidos.add(partido);
 	            eventosPartidos.put(partidoNombre, new ArrayList<>());
 	        }

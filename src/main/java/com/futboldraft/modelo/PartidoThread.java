@@ -30,9 +30,11 @@ public class PartidoThread extends Thread{
 	private final String nombrePartido;
 	private ListView<String> listViewPartidos;
 	private ListView<String> listViewEventos;
+	private Text txtContador;
 
 
-	public PartidoThread(String nombrePartido, boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada, Map<String, List<String>> eventosPartidos, ListView<String> listViewPartidos, ListView<String> listViewEventos) {
+	public PartidoThread(String nombrePartido, boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada, 
+			Map<String, List<String>> eventosPartidos, ListView<String> listViewPartidos, ListView<String> listViewEventos, Text txtContador) {
 		this.bbdd = BaseDatos.getInstance();
 		this.imprimir = imprimir;
 		this.equipoLoc = equipoLoc;
@@ -45,6 +47,7 @@ public class PartidoThread extends Thread{
 		this.eventosPartidos = eventosPartidos;
 		this.listViewPartidos = listViewPartidos;
 		this.listViewEventos = listViewEventos;
+		this.txtContador = txtContador;
 	}
 
 	public void run() {
@@ -177,14 +180,16 @@ public class PartidoThread extends Thread{
 				bbdd.insertarEventoPartido(evPart);
 			}
 
-			String evento = "Minuto " + (i * 2) + ": " + evPart.getDescripcion();
+			String evento = "Minuto " + (tiempos.get(i)) + ": " + evPart.getDescripcion();
 			eventosPartidos.get(nombrePartido).add(evento);
 			Platform.runLater(() -> {
 				if (nombrePartido.equals(listViewPartidos.getSelectionModel().getSelectedItem())) {
 					listViewEventos.getItems().add(evento);
+					txtContador.setText(golesLoc + " - " + golesVis);
 				}
 			});
 
+		
 		}//fin bucle partido
 
 		Clasificacion clas1 = bbdd.selectClasificacion(equipoLoc.getIdEquipo());
@@ -231,9 +236,15 @@ public class PartidoThread extends Thread{
 
 		fFue.add(("FUERA DE JUEGO por parte de"+ jugador.getNombre()));
 		fFue.add(("El jugador "+ jugador.getNombre() + "se encontraba FUERA DE JUEGO"));
+		
+		fVar.add("El VAR ha determinado que se ANULA el GOL porque le apetece");
+		fVar.add("El VAR ha vuelto a hacer una de las suyas, GOL ANULADO");
 
 		fDes.add(("Balon DESPEJADO gracias a  "+ jugador.getNombre()));
 		fDes.add(("Increible DESPEJE de  "+ jugador.getNombre()));
+		
+		fOtro.add("El fin del mundo se aproxima, GOL ANULADO");
+		fOtro.add("Una gaviota ha aparecido y ha PARADO  la pelota");
 
 
 		switch(tipoOcasion) {
@@ -265,6 +276,16 @@ public class PartidoThread extends Thread{
 	public String getNombrePartido() {
 		return nombrePartido;
 	}
+
+	public int getGolesLoc() {
+		return golesLoc;
+	}
+
+	public int getGolesVis() {
+		return golesVis;
+	}
+	
+	
 
 
 

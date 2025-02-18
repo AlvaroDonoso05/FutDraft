@@ -7,7 +7,7 @@ package com.futboldraft.modelo;
  */
 public class EventosPartido  implements java.io.Serializable {
 	
-	public enum tipoEventoEnum{GOL, PARADA, FUERA_DE_JUEGO, VAR, DESPEJE, OTRO};
+	public enum tipoEventoEnum{GOL, PARADA, VAR, DESPEJE, OTRO};
 
      private Integer idEvento;
      private Jugador jugador;
