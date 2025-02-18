@@ -13,14 +13,13 @@ public class CrearEquiposTask extends Task<Void> {
 	private Equipo equipo;
 
 	public CrearEquiposTask(Equipo equipo){
-		this.draft = Draft.getInstance();
-		this.bbdd = BaseDatos.getInstance();
 		this.equipo = equipo;
-
 	}
 
 	@Override
 	protected Void call() throws Exception {
+		this.draft = Draft.getInstance();
+		this.bbdd = BaseDatos.getInstance();
 
 		Jugador jugador;
 		try {

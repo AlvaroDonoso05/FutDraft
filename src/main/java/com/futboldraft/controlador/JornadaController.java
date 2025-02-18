@@ -63,11 +63,10 @@ public class JornadaController {
 		mc = MainController.getInstance();
 		contJorn = 0;
 		jorn = 1;
-		eqEnfr = new Equipo[10][2];
+		eqEnfr = new Equipo[190][2];
 		equipos = bbdd.selectEquiposByNombre("%");
 		equipoJug = mc.getEquipoJug();
 		List<Equipo> equiposSinJug = bbdd.selectEquiposSinEqJug(equipoJug.getIdEquipo());
-		equipos2 = new ArrayList<Equipo>();
 		
 		Collections.shuffle(equipos);
 		Equipo eqEl = null;
@@ -87,9 +86,6 @@ public class JornadaController {
 			Clasificacion clas = new Clasificacion(equipos.get(i));
 			clas.setIdEquipo(equipos.get(i).getIdEquipo());
 			bbdd.insertarClasificacion(clas);
-		}
-		for(int i = 0; i<10; i++){
-			equipos2.add(equipos.remove(equipos.size() - 1));
 		}
 		
 		listViewPartidos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> mostrarEventos(newVal));
@@ -127,39 +123,33 @@ public class JornadaController {
 	        
 	        List<PartidoThread> partidos = new ArrayList<>();
 	        List<String> nombresPartidos = new ArrayList<>();
-			//local
-			if(contJorn%2==0) {
-				for(int i = 0; i<equipos.size();i++) {	
-					if(i + contJorn<equipos.size()) {
-						eqEnfr[i][0] = equipos.get(i);
-						eqEnfr[i][1] = equipos2.get(i + contJorn);		
-					}else {
-						eqEnfr[i][0] = equipos.get(i);
-						eqEnfr[i][1] = equipos2.get((i + contJorn)%10);
-					}
-						
-				}
-			//visitante
-			}else {
-				System.out.println(equipos.size());
-				for(int i = 0; i<equipos.size();i++) {
-					if(i + contJorn<equipos.size()) {
-						eqEnfr[i][1] = equipos.get(i);
-						eqEnfr[i][0] = equipos2.get(i);
-					}else {
-						eqEnfr[i][1] = equipos.get(i);
-						eqEnfr[i][0] = equipos2.get((i + contJorn)%10);
-					}
+	        for (int i = 0; i < 19; i++) {
+	        	//local
+				if(i%2==0) {
+					for (int  j = 0; j < equipos.size()/2; j++) {
+		                eqEnfr[(i*equipos.size()/2)+j][0] = equipos.get(j);
+		                eqEnfr[(i*equipos.size()/2)+j][1] = equipos.get(equipos.size() - 1 - j);
+		                                     
+		            }
+					//visitante
+				}else {
+					for (int  j = 0; j < equipos.size()/2; j++) {
+		            	eqEnfr[(i*equipos.size()/2)+j][1] = equipos.get(j);
+		            	eqEnfr[(i*equipos.size()/2)+j][0] = equipos.get(equipos.size() - 1 - j);
+		                      		                                  
+		            }
 					
 				}
-			}
+	            
+	            // Rotar los equipos para la próxima jornada
+	            Collections.rotate(equipos.subList(1, equipos.size()), 1);            
+	        }
 			
-			for (int i = 0; i <eqEnfr.length; i++) {
-				System.out.println(eqEnfr.length);
+			for (int i = 0; i <equipos.size()/2; i++) {
 				System.out.println(eqEnfr[i][0].getNombre() + " " + eqEnfr[i][1].getNombre());
-	            String partidoNombre = eqEnfr[i][0].getNombre() + " vs " + eqEnfr[i][1].getNombre();
+	            String partidoNombre = eqEnfr[i+(10*contJorn)][0].getNombre() + " vs " + eqEnfr[i+(10*contJorn)][1].getNombre();
 	            nombresPartidos.add(partidoNombre);
-	            PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[i][0], eqEnfr[i][1], jorn, eventosPartidos, listViewPartidos, listViewEventos);
+	            PartidoThread partido = new PartidoThread(partidoNombre, true, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos);
 	            partidos.add(partido);
 	            eventosPartidos.put(partidoNombre, new ArrayList<>());
 	        }

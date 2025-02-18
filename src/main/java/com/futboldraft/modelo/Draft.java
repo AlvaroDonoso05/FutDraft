@@ -30,7 +30,7 @@ public class Draft {
 		return jugadoresDel.remove((int)(Math.random()*jugadoresDel.size()));
 	}
 	
-	public static Draft getInstance(){
+	public synchronized static Draft getInstance(){
 		if(instance == null) {
 			instance = new Draft();		
 		}

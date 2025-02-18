@@ -18,21 +18,21 @@ import javafx.scene.text.Text;
 
 public class PartidoThread extends Thread{
 
-    private BaseDatos bbdd;
-    private boolean imprimir;
-    private Equipo equipoLoc;
-    private Equipo equipoVis;
-    private int idJornada;
-    private int golesLoc;
-    private int golesVis;
-    private List<Integer> tiempos;
-    private Map<String, List<String>> eventosPartidos;
-    private final String nombrePartido;
-    private ListView<String> listViewPartidos;
-    private ListView<String> listViewEventos;
+	private BaseDatos bbdd;
+	private boolean imprimir;
+	private Equipo equipoLoc;
+	private Equipo equipoVis;
+	private int idJornada;
+	private int golesLoc;
+	private int golesVis;
+	private List<Integer> tiempos;
+	private Map<String, List<String>> eventosPartidos;
+	private final String nombrePartido;
+	private ListView<String> listViewPartidos;
+	private ListView<String> listViewEventos;
 
 
-    public PartidoThread(String nombrePartido, boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada, Map<String, List<String>> eventosPartidos, ListView<String> listViewPartidos, ListView<String> listViewEventos) {
+	public PartidoThread(String nombrePartido, boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada, Map<String, List<String>> eventosPartidos, ListView<String> listViewPartidos, ListView<String> listViewEventos) {
 		this.bbdd = BaseDatos.getInstance();
 		this.imprimir = imprimir;
 		this.equipoLoc = equipoLoc;
@@ -45,7 +45,7 @@ public class PartidoThread extends Thread{
 		this.eventosPartidos = eventosPartidos;
 		this.listViewPartidos = listViewPartidos;
 		this.listViewEventos = listViewEventos;
-    }
+	}
 
 	public void run() {
 		//jornada se genera en el controlador
@@ -54,7 +54,7 @@ public class PartidoThread extends Thread{
 		int statsTLoc = 0, statsTVis = 0, atkL = 8, defL = 8, atkV = 8, defV = 8, atk = 0, def = 0, random, idEquipo;
 		Jugador jugAtk = null, jugDef = null;
 		String frase="";
-		
+
 		idEquipo = equipoLoc.getIdEquipo();
 		List<Jugador> lJugadoresLoc = new ArrayList<Jugador>();
 		lJugadoresLoc = bbdd.selectJugadoresEquipo(idEquipo);
@@ -62,13 +62,13 @@ public class PartidoThread extends Thread{
 		idEquipo = equipoVis.getIdEquipo();
 		List<Jugador> lJugadoresVis = new ArrayList<Jugador>();
 		lJugadoresVis = bbdd.selectJugadoresEquipo(idEquipo);
-		
+
 		//crear timestamps aleatorios
 		for(int i=0; i<16; i++) {
 			tiempos.add((int)(Math.random()*91));
 		}
 		Collections.sort(tiempos);
-		
+
 		//insertar partido
 		Partido partido = new Partido();
 		partido.setEquipoByIdEquipoLocal(equipoLoc);
@@ -110,7 +110,7 @@ public class PartidoThread extends Thread{
 					def = equipoVis.defender();	
 					do {
 						jugDef = lJugadoresVis.get((int)(Math.random() * lJugadoresVis.size()));
-					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") ||
+					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") &&
 							!jugDef.getPosicion().equalsIgnoreCase("POR"));
 					//else si no ataquesL, ataca V
 				}else {
@@ -121,7 +121,7 @@ public class PartidoThread extends Thread{
 					def = equipoLoc.defender();					
 					do {
 						jugDef = lJugadoresLoc.get((int)(Math.random() * lJugadoresLoc.size()));
-					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") ||
+					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") &&
 							!jugDef.getPosicion().equalsIgnoreCase("POR"));
 				}
 				//else alternar ataque/defensa
@@ -135,7 +135,7 @@ public class PartidoThread extends Thread{
 					def = equipoLoc.defender();	
 					do {
 						jugDef = lJugadoresLoc.get((int)(Math.random() * lJugadoresLoc.size()));
-					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") ||
+					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") &&
 							!jugDef.getPosicion().equalsIgnoreCase("POR"));
 					//else si no ataquesV, ataca L
 				}else {
@@ -146,12 +146,12 @@ public class PartidoThread extends Thread{
 					def = equipoVis.defender();					
 					do {
 						jugDef = lJugadoresVis.get((int)(Math.random() * lJugadoresVis.size()));
-					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") ||
+					}while(!jugDef.getPosicion().equalsIgnoreCase("DEF") &&
 							!jugDef.getPosicion().equalsIgnoreCase("POR"));
 				}
-				
+
 			}
-			
+
 			//una vez ha atacado Local o visitante, se comprueba quien gana
 			EventosPartido evPart;
 			if(atk>def) {		
@@ -169,38 +169,32 @@ public class PartidoThread extends Thread{
 					evPart = new EventosPartido(jugAtk, partido, tiempos.get(i), tipoEvento[0].toString(), frase);
 					bbdd.insertarEventoPartido(evPart);
 				}
-				
+
 			}else {
 				random = (int)(1 + Math.random()*4);
 				frase = seleccionarResultado(tipoEvento[random].toString(), jugDef);
 				evPart = new EventosPartido(jugDef, partido, tiempos.get(i), tipoEvento[random].toString(), frase);
 				bbdd.insertarEventoPartido(evPart);
 			}
-			
+
 			String evento = "Minuto " + (i * 2) + ": " + evPart.getDescripcion();
 			eventosPartidos.get(nombrePartido).add(evento);
 			Platform.runLater(() -> {
-                if (nombrePartido.equals(listViewPartidos.getSelectionModel().getSelectedItem())) {
-                    listViewEventos.getItems().add(evento);
-                }
-            });
-			
-			
-			try {
-				this.wait(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+				if (nombrePartido.equals(listViewPartidos.getSelectionModel().getSelectedItem())) {
+					listViewEventos.getItems().add(evento);
+				}
+			});
+
 		}//fin bucle partido
-		
+
 		Clasificacion clas1 = bbdd.selectClasificacion(equipoLoc.getIdEquipo());
 		clas1.setGolesContra(clas1.getGolesContra() + golesVis);
 		clas1.setGolesFavor(clas1.getGolesFavor() + golesLoc);
-		
+
 		Clasificacion clas2 = bbdd.selectClasificacion(equipoVis.getIdEquipo());
 		clas2.setGolesContra(clas1.getGolesContra() + golesLoc);
 		clas2.setGolesFavor(clas1.getGolesFavor() + golesVis);
-		
+
 		if(golesLoc>golesVis) {
 			clas1.setPuntos(clas1.getPuntos() + 3);
 		}else if(golesVis>golesLoc) {
@@ -209,11 +203,11 @@ public class PartidoThread extends Thread{
 			clas1.setPuntos(clas1.getPuntos() + 1);
 			clas2.setPuntos(clas2.getPuntos() + 1);
 		}
-		
+
 		bbdd.insertarClasificacion(clas1);
 		bbdd.insertarClasificacion(clas2);
-		
-		
+
+
 
 
 	}
@@ -229,8 +223,8 @@ public class PartidoThread extends Thread{
 
 		fGol.add("¡GOOOOL! ¡Qué maravilla de jugada de "+ jugador.getNombre()+ "!");
 		fGol.add("¡GOLAZO de "+ jugador.getNombre()+ "!");
-		fGol.add("¡Vaselina y GOL "+ jugador.getNombre()+ "!");
-		fGol.add("¡Cabezazo y GOL "+ jugador.getNombre()+ "!");
+		fGol.add("¡Vaselina y GOL de "+ jugador.getNombre()+ "!");
+		fGol.add("¡Cabezazo y GOL de "+ jugador.getNombre()+ "!");
 
 		fPar.add(("¡PARADON de"+ jugador.getNombre()+ " evitando la ocasion"));
 		fPar.add(("¡PARADA sencilla de"+ jugador.getNombre()));
@@ -271,8 +265,8 @@ public class PartidoThread extends Thread{
 	public String getNombrePartido() {
 		return nombrePartido;
 	}
-	
-	
+
+
 
 
 
