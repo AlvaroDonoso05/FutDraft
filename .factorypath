@@ -56,4 +56,5 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-graphics/21/javafx-graphics-21-win.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-base/21/javafx-base-21.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/openjfx/javafx-base/21/javafx-base-21-win.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="false" runInBatchMode="false"/>
 </factorypath>
