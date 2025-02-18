@@ -36,7 +36,7 @@ public class MainController {
 		if(instance == null) {
 			instance = new MainController(stage, true);
 		}
-
+		
 		return instance;
 	}
 
