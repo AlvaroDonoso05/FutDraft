@@ -84,7 +84,7 @@ public class Equipo  implements java.io.Serializable {
     public int atacar(Jugador jugAt) {
     	int ataque = 0, fTecn = 0;
     	List<Jugador> jugadores = new ArrayList<Jugador>();
-    	jugadores = bbdd.selectJugadoresEquipo(idEquipo);
+    	jugadores.addAll(jugadors);
     	
     		
     	for(Jugador jugador : jugadores) {
@@ -100,7 +100,7 @@ public class Equipo  implements java.io.Serializable {
     public int defender() {
     	int defensa = 0;
     	List<Jugador> jugadores = new ArrayList<Jugador>();
-    	jugadores = bbdd.selectJugadoresEquipo(idEquipo);
+    	jugadores.addAll(jugadors);
     	
     	for(Jugador jugador : jugadores) {
     		if(jugador.getPosicion().equalsIgnoreCase("POR")) {
