@@ -100,6 +100,10 @@ public class PartidoThread extends Thread{
 			atkL -= 2;
 			defL +=2;
 		}
+		if(imprimir) {
+		listViewEventos.getItems().clear();
+		}
+		
 		//bucle simulacion partido
 		for(int i = 0; i<16;i++) {
 			//if alternar ataque/efensa
@@ -182,15 +186,25 @@ public class PartidoThread extends Thread{
 
 			String evento = "Minuto " + (tiempos.get(i)) + ": " + evPart.getDescripcion();
 			eventosPartidos.get(nombrePartido).add(evento);
+			
+			
 			Platform.runLater(() -> {
-				if (nombrePartido.equals(listViewPartidos.getSelectionModel().getSelectedItem())) {
+				if(imprimir) {
 					listViewEventos.getItems().add(evento);
 					txtContador.setText(golesLoc + " - " + golesVis);
 				}
+				if (nombrePartido.equals(listViewPartidos.getSelectionModel().getSelectedItem())) {
+					listViewEventos.getItems().setAll(evento);
+					txtContador.setText(golesLoc + " - " + golesVis);
+				}
+				
 			});
 
 		
 		}//fin bucle partido
+	
+			
+		
 
 		Clasificacion clas1 = bbdd.selectClasificacion(equipoLoc.getIdEquipo());
 		clas1.setGolesContra(clas1.getGolesContra() + golesVis);
@@ -231,10 +245,10 @@ public class PartidoThread extends Thread{
 		fGol.add("¡Vaselina y GOL de "+ jugador.getNombre()+ "!");
 		fGol.add("¡Cabezazo y GOL de "+ jugador.getNombre()+ "!");
 
-		fPar.add(("¡PARADON de"+ jugador.getNombre()+ " evitando la ocasion"));
-		fPar.add(("¡PARADA sencilla de"+ jugador.getNombre()));
+		fPar.add(("¡PARADON de "+ jugador.getNombre()+ " evitando la ocasion"));
+		fPar.add(("¡PARADA sencilla de "+ jugador.getNombre()));
 
-		fFue.add(("FUERA DE JUEGO por parte de"+ jugador.getNombre()));
+		fFue.add(("FUERA DE JUEGO por parte de "+ jugador.getNombre()));
 		fFue.add(("El jugador "+ jugador.getNombre() + "se encontraba FUERA DE JUEGO"));
 		
 		fVar.add("El VAR ha determinado que se ANULA el GOL porque le apetece");
@@ -284,6 +298,11 @@ public class PartidoThread extends Thread{
 	public int getGolesVis() {
 		return golesVis;
 	}
+
+	public void setImprimir(boolean imprimir) {
+		this.imprimir = imprimir;
+	}
+	
 	
 	
 

@@ -99,9 +99,6 @@ public class JornadaController {
 	        if (newVal != null) {
 	            int jornadaSeleccionada = Integer.parseInt(newVal.replace("Jornada ", ""));
 	            mostrarJornada(jornadaSeleccionada);
-	            int golesLoc = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesLoc();
-	            int golesVis = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesVis();
-	            txtContador.setText(golesLoc + " - "+ golesVis);
 	            
 	        }
 	    });
@@ -116,9 +113,9 @@ public class JornadaController {
 	        for (PartidoThread partido : partidos) {
 	            nombresPartidos.add(partido.getNombrePartido());
 	        }
-
 	        listViewPartidos.getItems().setAll(nombresPartidos);
 	        listViewEventos.getItems().clear();
+	        
 	    }
 	}
 	
@@ -158,9 +155,15 @@ public class JornadaController {
 				System.out.println(eqEnfr[i][0].getNombre() + " " + eqEnfr[i][1].getNombre());
 	            String partidoNombre = eqEnfr[i+(10*contJorn)][0].getNombre() + " vs " + eqEnfr[i+(10*contJorn)][1].getNombre();
 	            nombresPartidos.add(partidoNombre);
-	            PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador);
-	            partidos.add(partido);
-	            eventosPartidos.put(partidoNombre, new ArrayList<>());
+	            if(i == 0) {
+	            	PartidoThread partido = new PartidoThread(partidoNombre, true, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador);
+		            partidos.add(partido);
+		            eventosPartidos.put(partidoNombre, new ArrayList<>());
+	            }else {
+	            	PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador);
+		            partidos.add(partido);
+		            eventosPartidos.put(partidoNombre, new ArrayList<>());
+	            }
 	        }
 			
 			jornadas.put(jorn, partidos);
@@ -198,25 +201,33 @@ public class JornadaController {
 	
 	private void mostrarEventos(String partido) {
         if (partido != null) {
+        	partidos.get(0).setImprimir(false);
+        	listViewEventos.getItems().clear();
             listViewEventos.getItems().setAll(eventosPartidos.get(partido));
+            int golesLoc = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesLoc();
+            int golesVis = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesVis();
+            System.out.println("Goles local: "+golesLoc);
+            System.out.println("Goles vis: "+golesVis);
+            txtContador.setText(golesLoc + " - "+ golesVis);
         }
     }
 	
 	public void hacerFichajes() {
 		Jugador jPor, jDef, jMed, jDel, jPor1, jDef1, jMed1, jDel1;
-		Set<Jugador> sJugadores = equipoJug.getJugadors();
-		List<Jugador> lJugadores = new ArrayList<Jugador>();
-		lJugadores.addAll(sJugadores);
+		List<Jugador> lJugadores = bbdd.selectJugadoresEquipo(equipoJug.getIdEquipo());//Jugadores del usuario
+		
 		List<Jugador> lJugadoresP = bbdd.jugadorPosicionLibre("POR");
 		List<Jugador> lJugadoresD = bbdd.jugadorPosicionLibre("DEF");
 		List<Jugador> lJugadoresM = bbdd.jugadorPosicionLibre("MED");
 		List<Jugador> lJugadoresDel = bbdd.jugadorPosicionLibre("DEL");
 		
+		//Obtener Jugadores Libres random
 		jPor1 = lJugadoresP.get((int)(Math.random()*lJugadoresP.size()));
 		jDef1 = lJugadoresD.get((int)(Math.random()*lJugadoresD.size()));
 		jMed1 = lJugadoresM.get((int)(Math.random()*lJugadoresM.size()));
-		jDel = lJugadoresDel.get((int)(Math.random()*lJugadoresDel.size()));
+		jDel1 = lJugadoresDel.get((int)(Math.random()*lJugadoresDel.size()));
 		
+		//Jugador aleatorio de cada posicion del jugador
 		do {
 			jPor = lJugadores.get((int)(Math.random()*lJugadores.size()));
 		}while(!jPor.getPosicion().equalsIgnoreCase("POR"));
@@ -229,7 +240,28 @@ public class JornadaController {
 		do {
 			jDel = lJugadores.get((int)(Math.random()*lJugadores.size()));
 		}while(!jDel.getPosicion().equalsIgnoreCase("DEL"));	
+		
+		jPor.setEquipo(null);
+		jDef.setEquipo(null);
+		jMed.setEquipo(null);
+		jDel.setEquipo(null);
+		
+		jPor1.setEquipo(equipoJug);
+		jDef1.setEquipo(equipoJug);
+		jMed1.setEquipo(equipoJug);
+		jDel1.setEquipo(equipoJug);
+		
+		bbdd.insertarJugador(jPor);
+		bbdd.insertarJugador(jDef);
+		bbdd.insertarJugador(jMed);
+		bbdd.insertarJugador(jDel);
+		
+		bbdd.insertarJugador(jPor1);
+		bbdd.insertarJugador(jDef1);
+		bbdd.insertarJugador(jMed1);
+		bbdd.insertarJugador(jDel1);
 	}
+	
 	
 	public void cambiarJugador(String nombre, String posicion, String nombre1, String posicion1) {
 		Jugador jug1 = bbdd.selectJugador(nombre, posicion);
@@ -242,6 +274,7 @@ public class JornadaController {
 	
 	public void mostrarClasificacion(){
 	List<Clasificacion> clasificacion = bbdd.selectClasificacionOrdenada("DESC");
+	
 	}
 	
 
