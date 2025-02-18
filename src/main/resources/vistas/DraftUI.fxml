@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -787,6 +789,15 @@
                                     </Pane>
                                  </children>
                               </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <Label fx:id="EquipoTxtSel" layoutX="55.0" layoutY="14.0" text="Equipo">
+                                       <font>
+                                          <Font name="Comic Sans MS Bold" size="42.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
                            </children>
                         </GridPane>
                      </children>
@@ -1166,6 +1177,33 @@
                            <children>
                               <TextField fx:id="nombreFilter" layoutX="21.0" layoutY="14.0" onKeyReleased="#aplicarFiltro" prefHeight="55.0" prefWidth="911.0" promptText="Filtrar por nombre..." styleClass="filter-textfield" />
                            </children></Pane>
+                     </children>
+                  </Pane>
+               </center>
+               <right>
+                  <Pane prefHeight="709.0" prefWidth="97.0" BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Pane prefHeight="709.0" prefWidth="55.0" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <Pane prefHeight="29.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+            <BorderPane fx:id="pSeleccion" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <center>
+                  <Pane prefHeight="677.0" prefWidth="1048.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Pane layoutX="48.0" layoutY="121.0" prefHeight="421.0" prefWidth="952.0">
+                           <children>
+                              <ImageView fitHeight="483.0" fitWidth="955.0" layoutX="-1.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/backgroung.png" />
+                                 </image>
+                              </ImageView>
+                              <ChoiceBox fx:id="seleccionEquipo" layoutX="314.0" layoutY="132.0" prefHeight="157.0" prefWidth="325.0" styleClass="custom-choicebox" />
+                           </children>
+                        </Pane>
                      </children>
                   </Pane>
                </center>

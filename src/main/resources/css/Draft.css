@@ -80,3 +80,38 @@
   -fx-border-radius: 5;
   -fx-padding: 10px;
 }
+
+
+/* ChoiceBox */
+.custom-choicebox {
+  -fx-background-color: #f4f4f9;
+  -fx-border-radius: 10;
+  -fx-border-width: 2;
+  -fx-font-size: 18px;
+  -fx-alignment: CENTER;
+  -fx-font-family: "Segoe UI", sans-serif;
+  -fx-text-fill: #333333;
+  -fx-padding: 10px;
+}
+
+.custom-choicebox .list-cell {
+  -fx-background-color: #ffffff;
+  -fx-font-size: 45px;
+  -fx-font-family: "Segoe UI", sans-serif;
+  -fx-text-fill: #333333;
+}
+
+.custom-choicebox:focused {
+  -fx-background-color: #e0eaff;
+  -fx-border-color: #4c8bf5;
+  -fx-border-width: 2;
+}
+
+.custom-choicebox .list-cell:hover {
+  -fx-background-color: #f0f8ff;
+  -fx-text-fill: #4c8bf5;
+}
+
+.custom-choicebox .arrow {
+  -fx-background-color: #4c8bf5;
+}

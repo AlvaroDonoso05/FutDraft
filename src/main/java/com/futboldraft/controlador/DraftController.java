@@ -14,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,8 +38,11 @@ public class DraftController {
 	private ImageView btnEmpezar, btnSalir, btnReroll, btnClasificacion;
 	
 	@FXML
-	private BorderPane seleccionJugador, pClasificacion;
+	private BorderPane seleccionJugador, pClasificacion, pSeleccion;
 
+	@FXML
+	private Label EquipoTxtSel;
+	
 	@FXML
 	private Text tNombreS1, tMediaS1, tAtaqS1, tDefS1, tTecS1, tPorS1, tPosS1;
 	@FXML
@@ -88,6 +93,9 @@ public class DraftController {
 	private TableColumn<ClasificacionTabla, Integer> colId, colAtaque, colTecnica, colDefensa, colPortero;
 	@FXML
 	private TableColumn<ClasificacionTabla, String> colEquipo, colNombre, colPosicion;
+	
+	@FXML
+	private ChoiceBox<String> seleccionEquipo;
 	
 	private ObservableList<ClasificacionTabla> listaOriginal;
 	
@@ -183,6 +191,7 @@ public class DraftController {
 		stdef3.setVisible(false);
 		stdef4.setVisible(false);
 		stpor1.setVisible(false);
+		pSeleccion.setVisible(true);
 		
 		List<Equipo> listaEquipos = bbdd.selectEquiposByNombre("%");
 		
@@ -214,6 +223,22 @@ public class DraftController {
 		
 		listaImgSeleccion = List.of(sel1, sel2, sel3, sel4, sel5);
 		listaPaneEstadisticas = List.of(stdel1, stdel2, stcen1, stcen2, stcen3, stcen4, stdef1, stdef2, stdef3, stdef4, stpor1);
+		
+		List<Equipo> listaEquiposChoice = bbdd.selectEquiposByNombre("%");
+		Equipo defaultE = listaEquiposChoice.get(0);
+		
+		for(Equipo equipo: listaEquiposChoice) {
+			seleccionEquipo.getItems().add(equipo.getNombre());
+		}
+		
+		seleccionEquipo.setValue(defaultE.getNombre());
+		
+		seleccionEquipo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			List<Equipo> equipo = bbdd.selectEquiposByNombre(newValue);
+			equipoJugador = equipo.get(0);
+			pSeleccion.setVisible(false);
+			EquipoTxtSel.setText(newValue);
+        });
 		
 		obtenerClasificacion();
 		
