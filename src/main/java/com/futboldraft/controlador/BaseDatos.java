@@ -59,8 +59,19 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Clasificacion> query = session.createQuery("FROM Clasificacion ORDER BY PUNTOS :orden");
-			query.setParameter("orden", orden);
+			Query<Clasificacion> query;
+			switch(orden) {
+			case "ASC":
+				query = session.createQuery("FROM Clasificacion ORDER BY puntos DESC");
+				break;
+			case "DESC":
+				query = session.createQuery("FROM Clasificacion ORDER BY puntos ASC");
+				break;
+			default:
+				query = session.createQuery("FROM Clasificacion ORDER BY puntos ASC");
+				break;
+			}
+			
 			clasificaciones = query.list();
 			session.getTransaction().commit();
 		}catch(Exception e) {
@@ -480,7 +491,7 @@ public class BaseDatos {
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE posicion = :posicion ORDER BY RAND()");
+			Query<Jugador> query = session.createQuery("FROM Jugador a WHERE posicion = :posicion AND equipo IS NULL ORDER BY RAND()");
 			query.setParameter("posicion", posicion);
 			query.setMaxResults(5);
 			jugadoresP = query.list();
@@ -526,7 +537,7 @@ public class BaseDatos {
 		return jugadoresP;
 	}
 
-	public void insertarJugador(Jugador jugador) {
+	public synchronized void insertarJugador(Jugador jugador) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -697,7 +708,7 @@ public class BaseDatos {
 		}
 	}
 
-	public static BaseDatos getInstance(){
+	public synchronized static BaseDatos getInstance(){
 		if(instance == null) {
 			instance = new BaseDatos();		
 		}
