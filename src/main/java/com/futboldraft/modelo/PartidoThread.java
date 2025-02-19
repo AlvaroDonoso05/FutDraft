@@ -31,10 +31,11 @@ public class PartidoThread extends Thread{
 	private ListView<String> listViewPartidos;
 	private ListView<String> listViewEventos;
 	private Text txtContador;
+	private List<int[]> goles;
 
 
 	public PartidoThread(String nombrePartido, boolean imprimir, Equipo equipoLoc, Equipo equipoVis, int idJornada, 
-			Map<String, List<String>> eventosPartidos, ListView<String> listViewPartidos, ListView<String> listViewEventos, Text txtContador) {
+			Map<String, List<String>> eventosPartidos, ListView<String> listViewPartidos, ListView<String> listViewEventos, Text txtContador, List<int[]> goles) {
 		this.bbdd = BaseDatos.getInstance();
 		this.imprimir = imprimir;
 		this.equipoLoc = equipoLoc;
@@ -48,6 +49,7 @@ public class PartidoThread extends Thread{
 		this.listViewPartidos = listViewPartidos;
 		this.listViewEventos = listViewEventos;
 		this.txtContador = txtContador;
+		this.goles = goles;
 	}
 
 	public void run() {
@@ -80,7 +82,7 @@ public class PartidoThread extends Thread{
 		partido.setGolesVisitante(golesVis);
 		Jornada jorn = bbdd.selectJornada(idJornada);
 		partido.setJornada(jorn);
-		bbdd.insertarPartido(partido);
+		
 
 		for(int i = 0; i<lJugadoresLoc.size();i++) {
 			Jugador jugadorL = lJugadoresLoc.get(i);
@@ -193,18 +195,16 @@ public class PartidoThread extends Thread{
 					listViewEventos.getItems().add(evento);
 					txtContador.setText(golesLoc + " - " + golesVis);
 				}
-				if (nombrePartido.equals(listViewPartidos.getSelectionModel().getSelectedItem())) {
-					listViewEventos.getItems().setAll(evento);
-					txtContador.setText(golesLoc + " - " + golesVis);
-				}
 				
 			});
 
 		
 		}//fin bucle partido
-	
-			
 		
+		bbdd.insertarPartido(partido);
+	
+		int[] golesP = {golesLoc, golesVis};
+		goles.add(golesP);
 
 		Clasificacion clas1 = bbdd.selectClasificacion(equipoLoc.getIdEquipo());
 		clas1.setGolesContra(clas1.getGolesContra() + golesVis);

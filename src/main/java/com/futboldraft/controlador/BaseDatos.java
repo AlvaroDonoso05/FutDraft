@@ -62,10 +62,10 @@ public class BaseDatos {
 			Query<Clasificacion> query;
 			switch(orden) {
 			case "ASC":
-				query = session.createQuery("FROM Clasificacion ORDER BY puntos DESC");
+				query = session.createQuery("FROM Clasificacion ORDER BY puntos ASC");
 				break;
 			case "DESC":
-				query = session.createQuery("FROM Clasificacion ORDER BY puntos ASC");
+				query = session.createQuery("FROM Clasificacion ORDER BY puntos DESC");
 				break;
 			default:
 				query = session.createQuery("FROM Clasificacion ORDER BY puntos ASC");
@@ -358,6 +358,34 @@ public class BaseDatos {
 			}
 		}
 		
+	}
+	
+	public Partido selectPartido(Equipo eqL,  Equipo eqV, Jornada jornada) {
+		Session session = null;
+		Partido partido = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Partido> query = session.createQuery("FROM Partido WHERE equipoByIdEquipoVisitante = :eqV AND equipoByIdEquipoLocal = :eqL AND jornada = :jornada");
+			query.setParameter("eqL", eqL);
+			query.setParameter("eqV", eqV);
+			query.setParameter("jornada", jornada);
+			partido = query.getSingleResult();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}		
+	return partido;
 	}
 	
 	public void borrarEventosPartido() {

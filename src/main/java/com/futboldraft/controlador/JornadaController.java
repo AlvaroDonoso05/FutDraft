@@ -27,14 +27,15 @@ public class JornadaController {
 
 	
 	private BaseDatos bbdd = BaseDatos.getInstance();
-	private List<Equipo> equipos, equipos2;
+	private List<Equipo> equipos;
 	private Equipo equipoJug;
 	private int contJorn, jorn;
 	private Equipo [][] eqEnfr;
 	private List<Clasificacion> clasificaciones;
-	private DraftController draftC;
 	private boolean cambiarJug;
 	private List<PartidoThread> partidos;
+	private Jornada jornada;
+	private List<int[]> goles;
 	
 	@FXML
     private ChoiceBox<String> choiceBoxJornadas;
@@ -82,7 +83,6 @@ public class JornadaController {
 		equipos.add(eqTemp);
 		cambiarJug = false;
 		
-		bbdd.borrarClasificacion();
 		for(int i = 0; i<equipos.size(); i++) {
 			Clasificacion clas = new Clasificacion(equipos.get(i));
 			clas.setIdEquipo(equipos.get(i).getIdEquipo());
@@ -122,6 +122,7 @@ public class JornadaController {
 	//botonSiguiente Jornada, inicializar jornada a 0 a 1, decidir despues
 	@FXML
 	private void enfrentamientosJornada() {
+	
 		cambiarJug = false;
 		if(jorn < 20) {
 			choiceBoxJornadas.getItems().add("Jornada " + jorn);
@@ -150,17 +151,16 @@ public class JornadaController {
 	            // Rotar los equipos para la próxima jornada
 	            Collections.rotate(equipos.subList(1, equipos.size()), 1);            
 	        }
-			
+			goles = new ArrayList<int[]>();
 			for (int i = 0; i <equipos.size()/2; i++) {
-				System.out.println(eqEnfr[i][0].getNombre() + " " + eqEnfr[i][1].getNombre());
 	            String partidoNombre = eqEnfr[i+(10*contJorn)][0].getNombre() + " vs " + eqEnfr[i+(10*contJorn)][1].getNombre();
 	            nombresPartidos.add(partidoNombre);
 	            if(i == 0) {
-	            	PartidoThread partido = new PartidoThread(partidoNombre, true, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador);
+	            	PartidoThread partido = new PartidoThread(partidoNombre, true, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador, goles);
 		            partidos.add(partido);
 		            eventosPartidos.put(partidoNombre, new ArrayList<>());
 	            }else {
-	            	PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador);
+	            	PartidoThread partido = new PartidoThread(partidoNombre, false, eqEnfr[i+(10*contJorn)][0], eqEnfr[i+(10*contJorn)][1], jorn, eventosPartidos, listViewPartidos, listViewEventos, txtContador, goles);
 		            partidos.add(partido);
 		            eventosPartidos.put(partidoNombre, new ArrayList<>());
 	            }
@@ -168,8 +168,8 @@ public class JornadaController {
 			
 			jornadas.put(jorn, partidos);
 			listViewPartidos.getItems().setAll(nombresPartidos);
-			
-			bbdd.insertarJornada(new Jornada(jorn));
+			jornada = new Jornada(jorn);
+			bbdd.insertarJornada(jornada);
 			
 			for (PartidoThread partido : partidos) {
 	            partido.start();
@@ -204,11 +204,9 @@ public class JornadaController {
         	partidos.get(0).setImprimir(false);
         	listViewEventos.getItems().clear();
             listViewEventos.getItems().setAll(eventosPartidos.get(partido));
-            int golesLoc = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesLoc();
-            int golesVis = partidos.get(choiceBoxJornadas.getSelectionModel().getSelectedIndex()).getGolesVis();
-            System.out.println("Goles local: "+golesLoc);
-            System.out.println("Goles vis: "+golesVis);
-            txtContador.setText(golesLoc + " - "+ golesVis);
+
+
+            
         }
     }
 	
