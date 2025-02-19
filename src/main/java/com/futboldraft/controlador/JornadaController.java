@@ -4,22 +4,25 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.futboldraft.modelo.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -37,6 +40,32 @@ public class JornadaController {
 	private List<PartidoThread> partidos;
 	
 	@FXML
+	private BorderPane pJugadores, pClasificacion;
+	
+	@FXML
+	private TextField nombreFilter, nombreFilterEquipo;
+	
+	@FXML
+	private TableView<JugadorTabla> tableView;
+	
+	@FXML
+	private TableColumn<JugadorTabla, Integer> colId, colAtaque, colTecnica, colDefensa, colPortero;
+	@FXML
+	private TableColumn<JugadorTabla, String> colEquipo, colNombre, colPosicion;
+	
+	private ObservableList<JugadorTabla> listaOriginal;
+	
+	@FXML
+	private TableView<ClasificacionTabla> tableViewEquipo;
+	
+	@FXML
+	private TableColumn<ClasificacionTabla, Integer> colIdEquipo, colPuntos, colFavor, colContra, colPartidos;
+	@FXML
+	private TableColumn<ClasificacionTabla, String> colEquipo1;
+	
+	private ObservableList<ClasificacionTabla> listaOriginalEquipo;
+	
+	@FXML
     private ChoiceBox<String> choiceBoxJornadas;
     @FXML
     private ListView<String> listViewPartidos;
@@ -47,7 +76,7 @@ public class JornadaController {
     private Text txtTiempo, txtContador;
 	
 	@FXML
-	private ImageView btnSiguienteJornada, btnSalir;
+	private ImageView btnSiguienteJornada, btnSalir, btnJugadores, btnClasificacion;
 	
 	private Image btnSJornada_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnSJornada.png").toExternalForm());
 	private Image btnSJornada_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnSJornada_action.png").toExternalForm());
@@ -58,6 +87,11 @@ public class JornadaController {
 	
 	private final Map<Integer, List<PartidoThread>> jornadas = new HashMap<>();
     private final Map<String, List<String>> eventosPartidos = new HashMap<>();
+    
+    private Image btnJugadores_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnJugadores.png").toExternalForm());
+	private Image btnJugadores_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnJugadores_action.png").toExternalForm());
+	private Image btnClasificacion_Estado1 = new Image(getClass().getResource("/imagenes/Botones/leaderboard.png").toExternalForm());
+	private Image btnClasificacion_Estado2 = new Image(getClass().getResource("/imagenes/Botones/leaderboard_action.png").toExternalForm());
 	
 	@FXML
 	private void initialize() {
@@ -77,6 +111,24 @@ public class JornadaController {
 			}
 		}
 		equipos.remove(eqEl);
+		
+		colId.setCellValueFactory(new PropertyValueFactory<>("idJugador"));
+		colEquipo.setCellValueFactory(new PropertyValueFactory<>("equipo"));
+		colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+		colPosicion.setCellValueFactory(new PropertyValueFactory<>("posicion"));
+		colAtaque.setCellValueFactory(new PropertyValueFactory<>("fAtaque"));
+		colTecnica.setCellValueFactory(new PropertyValueFactory<>("fTecnica"));
+		colDefensa.setCellValueFactory(new PropertyValueFactory<>("fDefensa"));
+		colPortero.setCellValueFactory(new PropertyValueFactory<>("fPortero"));
+		
+		colIdEquipo.setCellValueFactory(new PropertyValueFactory<>("idEquipo"));
+	    colEquipo1.setCellValueFactory(new PropertyValueFactory<>("equipo"));
+	    colPuntos.setCellValueFactory(new PropertyValueFactory<>("puntos"));
+	    colFavor.setCellValueFactory(new PropertyValueFactory<>("golesFavor"));
+	    colContra.setCellValueFactory(new PropertyValueFactory<>("golesContra"));
+	    colPartidos.setCellValueFactory(new PropertyValueFactory<>("partidosJugados"));
+		
+		
 		
 		Equipo eqTemp = equipos.set(0, equipoJug);
 		equipos.add(eqTemp);
@@ -103,6 +155,99 @@ public class JornadaController {
 	        }
 	    });
 		
+		obtenerJugadores();
+		obtenerClasificacion();
+		
+	}
+	
+	@FXML
+	private void aplicarFiltro() {
+		String nombreBusqueda = nombreFilter.getText().toLowerCase();
+
+		ObservableList<JugadorTabla> listaFiltrada = FXCollections.observableArrayList();
+		for (JugadorTabla item : listaOriginal) {
+			if (item.getNombre().toLowerCase().contains(nombreBusqueda)) {
+				listaFiltrada.add(item);
+			}
+		}
+
+		tableView.setItems(listaFiltrada);
+	}
+	
+	@FXML
+	private void aplicarFiltroEquipo() {
+		String nombreBusqueda = nombreFilterEquipo.getText().toLowerCase();
+
+		ObservableList<ClasificacionTabla> listaFiltrada = FXCollections.observableArrayList();
+		for (ClasificacionTabla item : listaOriginalEquipo) {
+			if (item.getEquipo().toLowerCase().contains(nombreBusqueda)) {
+				listaFiltrada.add(item);
+			}
+		}
+
+		tableViewEquipo.setItems(listaFiltrada);
+	}	
+	
+	public void obtenerJugadores() {
+	    Task<ObservableList<JugadorTabla>> task = new Task<>() {
+	        @Override
+	        protected ObservableList<JugadorTabla> call() {
+	            listaOriginal = bbdd.obtenerJugadoresCla();
+	            System.out.println("Datos obtenidos: " + listaOriginal);  // Verifica que la lista no esté vacía
+	            return listaOriginal;
+	        }
+	    };
+
+	    task.setOnSucceeded(event -> {
+	        ObservableList<JugadorTabla> data = task.getValue();
+	        if (data != null && !data.isEmpty()) {
+	            // Refrescar la tabla con los nuevos datos
+	            tableView.setItems(data);
+	            System.out.println("Tabla actualizada con los datos.");
+	        } else {
+	            System.out.println("No se han obtenido datos válidos.");
+	        }
+	    });
+
+	    task.setOnFailed(event -> {
+	        System.out.println("Error en la tarea de obtener clasificación.");
+	        Throwable exception = task.getException();
+	        exception.printStackTrace();
+	    });
+
+	    // Ejecutar la tarea en un hilo separado
+	    new Thread(task).start();
+	}
+	
+	public void obtenerClasificacion() {
+	    Task<ObservableList<ClasificacionTabla>> task = new Task<>() {
+	        @Override
+	        protected ObservableList<ClasificacionTabla> call() {
+	        	listaOriginalEquipo = bbdd.obtenerClasificaciones();
+	            System.out.println("Datos obtenidos: " + listaOriginalEquipo);  // Verifica que la lista no esté vacía
+	            return listaOriginalEquipo;
+	        }
+	    };
+
+	    task.setOnSucceeded(event -> {
+	        ObservableList<ClasificacionTabla> data = task.getValue();
+	        if (data != null && !data.isEmpty()) {
+	            // Refrescar la tabla con los nuevos datos
+	            tableViewEquipo.setItems(data);
+	            System.out.println("Tabla Equipo Clasificacion actualizada con los datos.");
+	        } else {
+	            System.out.println("No se han obtenido datos válidos.");
+	        }
+	    });
+
+	    task.setOnFailed(event -> {
+	        System.out.println("Error en la tarea de obtener clasificación.");
+	        Throwable exception = task.getException();
+	        exception.printStackTrace();
+	    });
+
+	    // Ejecutar la tarea en un hilo separado
+	    new Thread(task).start();
 	}
 	
 	private void mostrarJornada(int jornada) {
@@ -122,6 +267,7 @@ public class JornadaController {
 	//botonSiguiente Jornada, inicializar jornada a 0 a 1, decidir despues
 	@FXML
 	private void enfrentamientosJornada() {
+		obtenerJugadores();
 		cambiarJug = false;
 		if(jorn < 20) {
 			choiceBoxJornadas.getItems().add("Jornada " + jorn);
@@ -197,6 +343,8 @@ public class JornadaController {
 				}
 			}
 		}
+		
+		obtenerClasificacion();
 	}
 	
 	private void mostrarEventos(String partido) {
@@ -292,6 +440,18 @@ public class JornadaController {
 			} else {
 				btnSalir.setImage(btnSalir_Estado1);
 			}
+		} else if(event.getSource() == btnJugadores) {
+			if (btnJugadores.getImage().equals(btnJugadores_Estado1)) {
+				btnJugadores.setImage(btnJugadores_Estado2);
+			} else {
+				btnJugadores.setImage(btnJugadores_Estado1);
+			}
+		} else if(event.getSource() == btnClasificacion) {
+			if (btnClasificacion.getImage().equals(btnClasificacion_Estado1)) {
+				btnClasificacion.setImage(btnClasificacion_Estado2);
+			} else {
+				btnClasificacion.setImage(btnClasificacion_Estado1);
+			}
 		}
 
 	}
@@ -309,6 +469,20 @@ public class JornadaController {
 					mc.cargarVista(MainController.LOADING);
 				} catch (Exception e1) {
 					e1.printStackTrace();
+				}
+			} else if(event.getSource() == btnJugadores) {
+				btnJugadores.setImage(btnJugadores_Estado1);
+				if(pJugadores.isVisible()) {
+					pJugadores.setVisible(false);
+				} else {
+					pJugadores.setVisible(true);
+				}
+			} else if(event.getSource() == btnClasificacion) {
+				btnClasificacion.setImage(btnClasificacion_Estado1);
+				if(pClasificacion.isVisible()) {
+					pClasificacion.setVisible(false);
+				} else {
+					pClasificacion.setVisible(true);
 				}
 			}
 		}));

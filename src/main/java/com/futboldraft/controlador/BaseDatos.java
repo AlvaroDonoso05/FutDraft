@@ -90,8 +90,8 @@ public class BaseDatos {
 		return clasificaciones;
 	}
 	
-	public ObservableList<ClasificacionTabla> obtenerClasificaciones() {
-	    ObservableList<ClasificacionTabla> jugadoresClasificacion = FXCollections.observableArrayList();
+	public ObservableList<JugadorTabla> obtenerJugadoresCla() {
+	    ObservableList<JugadorTabla> jugadoresClasificacion = FXCollections.observableArrayList();
 	    List<Jugador> jugadores;
 
 	    Session session = null;
@@ -119,7 +119,7 @@ public class BaseDatos {
 	    }
 
 	    for (Jugador jugador : jugadores) {
-	        ClasificacionTabla clasificacion = new ClasificacionTabla(
+	        JugadorTabla clasificacion = new JugadorTabla(
 	            jugador.getIdJugador(),
 	            jugador.getEquipo() != null ? jugador.getEquipo().getNombre() : "Desconocido",
 	            jugador.getNombre(),
@@ -133,6 +133,27 @@ public class BaseDatos {
 	    }
 
 	    return jugadoresClasificacion;
+	}
+	
+	
+	public ObservableList<ClasificacionTabla> obtenerClasificaciones() {
+	    ObservableList<ClasificacionTabla> equiposClasificacion = FXCollections.observableArrayList();
+	    List<Clasificacion> clasificacion = selectClasificacionOrdenada("DESC");
+
+	    for (Clasificacion clasificacionC : clasificacion) {
+	    	Equipo equipo = selectEquiposById(clasificacionC.getIdEquipo());
+	    	ClasificacionTabla clasificaciono = new ClasificacionTabla(
+	    			clasificacionC.getIdEquipo(),
+	    			equipo.getNombre(),
+	    			clasificacionC.getPuntos(),
+	    			clasificacionC.getGolesFavor(),
+	    			clasificacionC.getGolesContra(),
+	    			clasificacionC.getPartidosJugados()
+	        );
+	    	equiposClasificacion.add(clasificaciono);
+	    }
+
+	    return equiposClasificacion;
 	}
 	
 	public Clasificacion selectClasificacion(int idEquipo) {
@@ -584,6 +605,34 @@ public class BaseDatos {
 		
 		
 		return equipos;
+	}
+	
+	public Equipo selectEquiposById(int criterio) {
+		Equipo equipo;	
+		Session session = null;
+		
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			Query<Equipo> query = session.createQuery("FROM Equipo WHERE idEquipo = :criterio");
+			query.setParameter("criterio", criterio);
+			equipo = query.getSingleResult();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if (null != session) {
+				session.getTransaction().rollback();
+			}
+			throw e;
+		}
+		finally {
+			if (null != session) {
+				session.close();
+			}
+		}		
+		
+		
+		return equipo;
 	}
 	
 	
