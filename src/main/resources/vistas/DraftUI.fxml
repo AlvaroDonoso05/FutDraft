@@ -1252,7 +1252,7 @@
          <left>
             <ImageView fx:id="btnClasificacion" fitHeight="102.0" fitWidth="269.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../imagenes/Botones/leaderboard.png" />
+                  <Image url="@../imagenes/Botones/btnJugadores.png" />
                </image>
             </ImageView>
          </left>

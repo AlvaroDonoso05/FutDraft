@@ -3,8 +3,6 @@ package com.futboldraft.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.chainsaw.Main;
-
 import com.futboldraft.modelo.*;
 
 import javafx.animation.KeyFrame;
@@ -87,17 +85,20 @@ public class DraftController {
 	private ImageView sel1, sel2, sel3, sel4, sel5;
 	
 	@FXML
-	private TableView<ClasificacionTabla> tableView;
+	private TableView<JugadorTabla> tableView;
+	@FXML
+	private TableColumn<JugadorTabla, Integer> colId, colAtaque, colTecnica, colDefensa, colPortero;
+	@FXML
+	private TableColumn<JugadorTabla, String> colEquipo, colNombre, colPosicion;
 	
 	@FXML
-	private TableColumn<ClasificacionTabla, Integer> colId, colAtaque, colTecnica, colDefensa, colPortero;
-	@FXML
-	private TableColumn<ClasificacionTabla, String> colEquipo, colNombre, colPosicion;
+	private TableView<JugadorTabla> tableViewClasificacion;
+	
 	
 	@FXML
 	private ChoiceBox<String> seleccionEquipo;
 	
-	private ObservableList<ClasificacionTabla> listaOriginal;
+	private ObservableList<JugadorTabla> listaOriginal;
 	
 	@FXML
 	private Button test;
@@ -114,8 +115,8 @@ public class DraftController {
 	private Image btnReroll_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnReroll.png").toExternalForm());
 	private Image btnReroll_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnReroll_action.png").toExternalForm());
 	
-	private Image btnClasificacion_Estado1 = new Image(getClass().getResource("/imagenes/Botones/leaderboard.png").toExternalForm());
-	private Image btnClasificacion_Estado2 = new Image(getClass().getResource("/imagenes/Botones/leaderboard_action.png").toExternalForm());
+	private Image btnJugadores_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnJugadores.png").toExternalForm());
+	private Image btnJugadores_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnJugadores_action.png").toExternalForm());
 	
 	private Image bronze_Estado1 = new Image(getClass().getResource("/imagenes/cards/cardBronzeP.png").toExternalForm());
 	private Image plata_Estado1 = new Image(getClass().getResource("/imagenes/cards/cardSilverP.png").toExternalForm());
@@ -193,14 +194,6 @@ public class DraftController {
 		stpor1.setVisible(false);
 		pSeleccion.setVisible(true);
 		
-		List<Equipo> listaEquipos = bbdd.selectEquiposByNombre("%");
-		
-		// Obtener Equipo del Jugador
-		
-		int random = (int) (Math.random() * listaEquipos.size());
-		equipoJugador = listaEquipos.get(random);
-		mc.setEquipoJug(equipoJugador);
-		
 		listaSEstadisticas = new ArrayList<>();
 		listaSEstadisticas.add(List.of(tNombreS1, tMediaS1, tAtaqS1, tDefS1, tTecS1, tPorS1, tPosS1));
 		listaSEstadisticas.add(List.of(tNombreS2, tMediaS2, tAtaqS2, tDefS2, tTecS2, tPorS2, tPosS2));
@@ -238,24 +231,25 @@ public class DraftController {
 			equipoJugador = equipo.get(0);
 			pSeleccion.setVisible(false);
 			EquipoTxtSel.setText(newValue);
+			mc.setEquipoJug(equipoJugador);
         });
 		
-		obtenerClasificacion();
+		obtenerJugadores();
 		
 	}
 	
-	public void obtenerClasificacion() {
-	    Task<ObservableList<ClasificacionTabla>> task = new Task<>() {
+	public void obtenerJugadores() {
+	    Task<ObservableList<JugadorTabla>> task = new Task<>() {
 	        @Override
-	        protected ObservableList<ClasificacionTabla> call() {
-	            listaOriginal = bbdd.obtenerClasificaciones();
+	        protected ObservableList<JugadorTabla> call() {
+	            listaOriginal = bbdd.obtenerJugadoresCla();
 	            System.out.println("Datos obtenidos: " + listaOriginal);  // Verifica que la lista no esté vacía
 	            return listaOriginal;
 	        }
 	    };
 
 	    task.setOnSucceeded(event -> {
-	        ObservableList<ClasificacionTabla> data = task.getValue();
+	        ObservableList<JugadorTabla> data = task.getValue();
 	        if (data != null && !data.isEmpty()) {
 	            // Refrescar la tabla con los nuevos datos
 	            tableView.setItems(data);
@@ -276,9 +270,8 @@ public class DraftController {
 	}
 	
 	private void actualizarClasificacion(int idJugador, String equipo) {
-		for (ClasificacionTabla item : listaOriginal) {
+		for (JugadorTabla item : listaOriginal) {
 		    if (item.getIdJugador() == idJugador) {
-		    	System.out.println(idJugador + " " + equipo + " dbhrgrfajbhjiijsfdbhjoij");
 		    	item.setEquipo(equipo);
 		        break;
 		    }
@@ -290,8 +283,8 @@ public class DraftController {
 	private void aplicarFiltro() {
 		String nombreBusqueda = nombreFilter.getText().toLowerCase();
 
-		ObservableList<ClasificacionTabla> listaFiltrada = FXCollections.observableArrayList();
-		for (ClasificacionTabla item : listaOriginal) {
+		ObservableList<JugadorTabla> listaFiltrada = FXCollections.observableArrayList();
+		for (JugadorTabla item : listaOriginal) {
 			if (item.getNombre().toLowerCase().contains(nombreBusqueda)) {
 				listaFiltrada.add(item);
 			}
@@ -349,10 +342,10 @@ public class DraftController {
 				btnReroll.setImage(btnReroll_Estado1);
 			}						
 		} else if(event.getSource() == btnClasificacion) {
-			if (btnClasificacion.getImage().equals(btnClasificacion_Estado1)) {
-				btnClasificacion.setImage(btnClasificacion_Estado2);
+			if (btnClasificacion.getImage().equals(btnJugadores_Estado1)) {
+				btnClasificacion.setImage(btnJugadores_Estado2);
 			} else {
-				btnClasificacion.setImage(btnClasificacion_Estado1);
+				btnClasificacion.setImage(btnJugadores_Estado1);
 			}
 		}
 	}
@@ -386,7 +379,7 @@ public class DraftController {
 				listaJugadores = bbdd.jugadorPosicionRand("DEF");
 				rellenarJugadoresSeleccion(listaJugadores);
 			} else if(event.getSource() == btnClasificacion) {
-				btnClasificacion.setImage(btnClasificacion_Estado1);
+				btnClasificacion.setImage(btnJugadores_Estado1);
 				if(pClasificacion.isVisible()) {
 					pClasificacion.setVisible(false);
 				} else {

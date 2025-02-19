@@ -1,32 +1,28 @@
 package com.futboldraft.modelo;
 
 public class ClasificacionTabla {
-	private int idJugador;
-	private String equipo;
-	private String nombre;
-	private String posicion;
-	private int fAtaque;
-	private int fTecnica;
-	private int fDefensa;
-	private int fPortero;
-	
-	public ClasificacionTabla(int idJugador, String equipo, String nombre, String posicion, int fAtaque,
-			int fTecnica, int fDefensa, int fPortero) {
-		this.idJugador = idJugador;
+	private int idEquipo;
+    private String equipo;
+    private Integer puntos;
+    private Integer golesFavor;
+    private Integer golesContra;
+    private Integer partidosJugados;  
+    
+	public ClasificacionTabla(int idEquipo, String equipo, Integer puntos, Integer golesFavor, Integer golesContra,
+			Integer partidosJugados) {
+		this.idEquipo = idEquipo;
 		this.equipo = equipo;
-		this.nombre = nombre;
-		this.posicion = posicion;
-		this.fAtaque = fAtaque;
-		this.fTecnica = fTecnica;
-		this.fDefensa = fDefensa;
-		this.fPortero = fPortero;
+		this.puntos = puntos;
+		this.golesFavor = golesFavor;
+		this.golesContra = golesContra;
+		this.partidosJugados = partidosJugados;
 	}
 	
-	public int getIdJugador() {
-		return idJugador;
+	public int getIdEquipo() {
+		return idEquipo;
 	}
-	public void setIdJugador(int idJugador) {
-		this.idJugador = idJugador;
+	public void setIdEquipo(int idEquipo) {
+		this.idEquipo = idEquipo;
 	}
 	public String getEquipo() {
 		return equipo;
@@ -34,52 +30,30 @@ public class ClasificacionTabla {
 	public void setEquipo(String equipo) {
 		this.equipo = equipo;
 	}
-	public String getNombre() {
-		return nombre;
+	public Integer getPuntos() {
+		return puntos;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setPuntos(Integer puntos) {
+		this.puntos = puntos;
 	}
-	public String getPosicion() {
-		return posicion;
+	public Integer getGolesFavor() {
+		return golesFavor;
 	}
-	public void setPosicion(String posicion) {
-		this.posicion = posicion;
+	public void setGolesFavor(Integer golesFavor) {
+		this.golesFavor = golesFavor;
 	}
-	public void setfAtaque(int fAtaque) {
-		this.fAtaque = fAtaque;
+	public Integer getGolesContra() {
+		return golesContra;
 	}
-	public void setfTecnica(int fTecnica) {
-		this.fTecnica = fTecnica;
+	public void setGolesContra(Integer golesContra) {
+		this.golesContra = golesContra;
 	}
-	public void setfDefensa(int fDefensa) {
-		this.fDefensa = fDefensa;
+	public Integer getPartidosJugados() {
+		return partidosJugados;
 	}
-	public void setfPortero(int fPortero) {
-		this.fPortero = fPortero;
+	public void setPartidosJugados(Integer partidosJugados) {
+		this.partidosJugados = partidosJugados;
 	}
-	public int getFAtaque() {
-	    return fAtaque;
-	}
-
-	public int getFTecnica() {
-	    return fTecnica;
-	}
-
-	public int getFDefensa() {
-	    return fDefensa;
-	}
-
-	public int getFPortero() {
-	    return fPortero;
-	}
-	
-	@Override
-	public String toString() {
-		return "ClasificacionTabla [idJugador=" + idJugador + ", equipo=" + equipo + ", nombre=" + nombre
-				+ ", posicion=" + posicion + ", fAtaque=" + fAtaque + ", fTecnica=" + fTecnica + ", fDefensa="
-				+ fDefensa + ", fPortero=" + fPortero + "]";
-	}
-	
-	
+    
+    
 }
