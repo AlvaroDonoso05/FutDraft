@@ -434,11 +434,13 @@ public class JornadaController {
 	@FXML
 	public void clickBoton(MouseEvent event) {
 		if(event.getSource() == btnSiguienteJornada) {
+			if(!btnSiguienteJornada.getImage().equals(btnSJornada_dis)) {
 				if (btnSiguienteJornada.getImage().equals(btnSJornada_Estado1)) {
 					btnSiguienteJornada.setImage(btnSJornada_Estado2);
 				} else {
 					btnSiguienteJornada.setImage(btnSJornada_Estado1);
 				}
+			}
 		} else if(event.getSource() == btnSalir) {
 			if (btnSalir.getImage().equals(btnSalir_Estado1)) {
 				btnSalir.setImage(btnSalir_Estado2);
