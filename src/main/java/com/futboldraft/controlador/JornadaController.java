@@ -80,6 +80,7 @@ public class JornadaController {
 	
 	private Image btnSJornada_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnSJornada.png").toExternalForm());
 	private Image btnSJornada_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnSJornada_action.png").toExternalForm());
+	private Image btnSJornada_dis = new Image(getClass().getResource("/imagenes/Botones/btnSJornada_dis.png").toExternalForm());
 	private Image btnSalir_Estado1 = new Image(getClass().getResource("/imagenes/Botones/btnSalir.png").toExternalForm());
 	private Image btnSalir_Estado2 = new Image(getClass().getResource("/imagenes/Botones/btnSalir_action.png").toExternalForm());
 	
@@ -344,6 +345,10 @@ public class JornadaController {
 			}
 		}
 		
+		if(jorn >= 20) {
+			btnSiguienteJornada.setImage(btnSJornada_dis);
+		}
+		
 		obtenerClasificacion();
 	}
 	
@@ -421,7 +426,7 @@ public class JornadaController {
 	}
 	
 	public void mostrarClasificacion(){
-	List<Clasificacion> clasificacion = bbdd.selectClasificacionOrdenada("DESC");
+		List<Clasificacion> clasificacion = bbdd.selectClasificacionOrdenada("DESC");
 	
 	}
 	
