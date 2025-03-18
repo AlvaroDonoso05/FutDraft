@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Clase Partido mapeada a la tabla PARTIDO -->
+    <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.Partido" optimistic-lock="none" table="PARTIDO">
+        
+        <!-- ID del partido con generador identity -->
+        <id name="idPartido" type="java.lang.Integer">
+            <column name="ID_PARTIDO"/>
+            <generator class="identity"/>
+        </id>
+
+        <!-- Relación many-to-one con Jornada -->
+        <many-to-one class="com.futboldraft.modelo.Jornada" fetch="select" name="jornada">
+            <column name="ID_JORNADA" not-null="true"/>
+        </many-to-one>
+
+        <!-- Relación many-to-one con Equipo (equipo visitante) -->
+        <many-to-one class="com.futboldraft.modelo.Equipo" fetch="select" name="equipoByIdEquipoVisitante">
+            <column name="ID_EQUIPO_VISITANTE" not-null="true"/>
+        </many-to-one>
+
+        <!-- Relación many-to-one con Equipo (equipo local) -->
+        <many-to-one class="com.futboldraft.modelo.Equipo" fetch="select" name="equipoByIdEquipoLocal">
+            <column name="ID_EQUIPO_LOCAL" not-null="true"/>
+        </many-to-one>
+
+        <!-- Propiedad goles local -->
+        <property name="golesLocal" type="java.lang.Integer">
+            <column name="GOLES_LOCAL"/>
+        </property>
+
+        <!-- Propiedad goles visitante -->
+        <property name="golesVisitante" type="java.lang.Integer">
+            <column name="GOLES_VISITANTE"/>
+        </property>
+
+        <!-- Relación one-to-many con EventosPartido -->
+        <set fetch="select" inverse="true" lazy="true" name="eventosPartidos" table="EVENTOS_PARTIDO">
+            <key>
+                <column name="ID_PARTIDO" not-null="true"/>
+            </key>
+            <one-to-many class="com.futboldraft.modelo.EventosPartido"/>
+        </set>
+    </class>
+</hibernate-mapping>

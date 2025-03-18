@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.Goleador" optimistic-lock="none" table="GOLEADOR">
+        
+        <!-- ID de Goleador, generado mediante la clave primaria de Jugador -->
+        <id name="idJugador" type="int">
+            <column name="ID_JUGADOR"/>
+            <generator class="foreign">
+                <param name="property">jugador</param> <!-- Define el nombre del atributo que hace referencia a la entidad Jugador -->
+            </generator>
+        </id>
+
+        <!-- Relación one-to-one con Jugador -->
+        <one-to-one class="com.futboldraft.modelo.Jugador" constrained="true" name="jugador" />
+
+        <!-- Propiedad goles -->
+        <property name="goles" type="java.lang.Integer">
+            <column name="GOLES"/>
+        </property>
+    </class>
+</hibernate-mapping>

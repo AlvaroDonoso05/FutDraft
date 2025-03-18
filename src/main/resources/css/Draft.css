@@ -1,0 +1,117 @@
+.root {
+  -fx-background-image: url("../imagenes/background.jpg");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-size: cover;
+}
+
+.vbox {
+  -fx-alignment: center;
+  -fx-spacing: -15px;
+}
+
+.hbox {
+  -fx-alignment: bottom-right;
+  -fx-padding: 0 5px 0 0;
+}
+
+.btnClasificacion {
+  -fx-fit-width: 385px;
+}
+
+.btnSalir {
+  -fx-fit-height: 100px;
+}
+
+.paneSelect {
+  -fx-background-image: url("../imagenes/seleccion.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-size: cover;
+}
+
+/* Estilo general para la sección de filtros */
+.filter-section {
+  -fx-background-color: #f0f0f0;
+  -fx-border-radius: 10;
+  -fx-padding: 15;
+  -fx-spacing: 20;
+  -fx-border-width: 1;
+  -fx-border-color: #b0b0b0;
+  -fx-effect: dropshadow(gaussian, #808080, 10, 0, 2, 2);
+  -fx-background-insets: 0 0 10 0;
+  -fx-alignment: CENTER;
+}
+
+/* Estilo de la etiqueta de filtros */
+.filter-label {
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #333333;
+  -fx-padding: 5 0;
+}
+
+/* Estilo del TextField para el filtro de nombre */
+.filter-textfield {
+  -fx-padding: 10px;
+  -fx-background-color: white;
+  -fx-border-color: #cccccc;
+  -fx-border-radius: 5;
+  -fx-focus-color: #66a3ff;
+  -fx-font-size: 14px;
+}
+
+/* Estilo del Slider */
+.filter-slider {
+  -fx-pref-width: 250px;
+  -fx-padding: 10px 0;
+}
+
+/* Estilo de la etiqueta de puntuación */
+.filter-slider .tick-label {
+  -fx-font-size: 12px;
+  -fx-text-fill: #666666;
+}
+
+/* Estilo de la tabla */
+.table-view {
+  -fx-background-color: white;
+  -fx-border-color: #b0b0b0;
+  -fx-border-radius: 5;
+  -fx-padding: 10px;
+}
+
+
+/* ChoiceBox */
+.custom-choicebox {
+  -fx-background-color: #f4f4f9;
+  -fx-border-radius: 10;
+  -fx-border-width: 2;
+  -fx-font-size: 18px;
+  -fx-alignment: CENTER;
+  -fx-font-family: "Segoe UI", sans-serif;
+  -fx-text-fill: #333333;
+  -fx-padding: 10px;
+}
+
+.custom-choicebox .list-cell {
+  -fx-background-color: #ffffff;
+  -fx-font-size: 45px;
+  -fx-font-family: "Segoe UI", sans-serif;
+  -fx-text-fill: #333333;
+}
+
+.custom-choicebox:focused {
+  -fx-background-color: #e0eaff;
+  -fx-border-color: #4c8bf5;
+  -fx-border-width: 2;
+}
+
+.custom-choicebox .list-cell:hover {
+  -fx-background-color: #f0f8ff;
+  -fx-text-fill: #4c8bf5;
+}
+
+.custom-choicebox .arrow {
+  -fx-background-color: #4c8bf5;
+}

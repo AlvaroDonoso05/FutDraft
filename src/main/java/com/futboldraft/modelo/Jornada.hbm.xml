@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Clase Jornada mapeada a la tabla JORNADA -->
+    <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.Jornada" optimistic-lock="none" table="JORNADA">
+        
+        <!-- ID de la jornada con generador identity -->
+        <id name="idJornada" type="java.lang.Integer">
+            <column name="ID_JORNADA"/>
+            <generator class="identity"/>
+        </id>
+
+        <!-- Propiedad número de la jornada -->
+        <property name="numero" type="int">
+            <column name="NUMERO" not-null="true" unique="true"/>
+        </property>
+
+        <!-- Relación one-to-many con Partido -->
+        <set fetch="select" inverse="true" lazy="true" name="partidos" table="PARTIDO">
+            <key>
+                <column name="ID_JORNADA" not-null="true"/>
+            </key>
+            <one-to-many class="com.futboldraft.modelo.Partido"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

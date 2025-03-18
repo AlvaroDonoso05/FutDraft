@@ -1,0 +1,1261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@../css/Draft.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.futboldraft.controlador.DraftController">
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane prefHeight="763.0" prefWidth="1200.0">
+               <center>
+                    <VBox alignment="CENTER" spacing="10" style="-fx-padding: 10px;" BorderPane.alignment="CENTER">
+                     <children>
+                        <GridPane alignment="CENTER" prefHeight="784.0" prefWidth="1171.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="207.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="207.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="188.0" minHeight="10.0" prefHeight="177.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <ImageView fx:id="del1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stdel1" layoutX="38.0" layoutY="10.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre1" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia1" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos1" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq1" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor1" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec1" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef1" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                 <children>
+                                    <ImageView fx:id="def4" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stdef4" layoutX="40.0" layoutY="8.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre10" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia10" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos10" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq10" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor10" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec10" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef10" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                 <children>
+                                    <ImageView fx:id="def3" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stdef3" layoutX="40.0" layoutY="8.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre9" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia9" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos9" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq9" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor9" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec9" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef9" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <ImageView fx:id="def2" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stdef2" layoutX="40.0" layoutY="8.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre8" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia8" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos8" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq8" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor8" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec8" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef8" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <ImageView fx:id="def1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stdef1" layoutX="40.0" layoutY="8.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre7" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia7" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos7" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq7" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor7" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec7" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef7" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="cen4" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stcen4" layoutX="40.0" layoutY="8.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre6" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia6" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos6" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq6" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor6" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec6" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef6" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="cen3" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stcen3" layoutX="40.0" layoutY="7.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre5" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia5" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos5" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq5" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor5" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec5" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef5" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+                                 <children>
+                                    <ImageView fx:id="del2" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stdel2" layoutX="40.0" layoutY="7.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre2" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia2" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos2" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq2" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor2" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec2" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef2" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="cen2" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stcen2" layoutX="40.0" layoutY="7.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre4" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia4" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos4" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq4" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor4" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec4" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef4" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="cen1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-16.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stcen1" layoutX="40.0" layoutY="7.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre3" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia3" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos3" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq3" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor3" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec3" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef3" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <children>
+                                    <ImageView fx:id="por1" fitHeight="240.0" fitWidth="174.0" layoutX="32.0" layoutY="-76.0" onMouseClicked="#clickSelec" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../imagenes/rotating_card_loop.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Pane fx:id="stpor1" layoutX="40.0" layoutY="-53.0" prefHeight="193.0" prefWidth="157.0">
+                                       <children>
+                                          <Text fx:id="tNombre11" layoutX="-3.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tMedia11" layoutX="12.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="27.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPos11" layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tAtaq11" layoutX="52.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tPor11" layoutX="113.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tTec11" layoutX="113.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="tDef11" layoutX="52.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <Label fx:id="EquipoTxtSel" layoutX="55.0" layoutY="14.0" text="Equipo">
+                                       <font>
+                                          <Font name="Comic Sans MS Bold" size="42.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </GridPane>
+                     </children>
+                    </VBox>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="seleccionJugador" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <top>
+                  <Pane prefHeight="173.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <Pane prefHeight="173.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </bottom>
+               <right>
+                  <Pane prefHeight="363.0" prefWidth="18.0" BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Pane prefHeight="363.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+               </left>
+               <center>
+                  <GridPane prefHeight="325.0" prefWidth="1142.0" styleClass="paneSelect" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Pane prefHeight="255.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <children>
+                              <ImageView fx:id="sel1" fitHeight="313.0" fitWidth="232.0" layoutX="14.0" onMouseClicked="#selJugadorClick" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="tNombreS1" layoutX="41.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombe Jugador" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="15.0" />
+                                 </font></Text>
+                              <Text fx:id="tMediaS1" layoutX="41.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="27.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPosS1" layoutX="45.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="56.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="57.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="132.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="131.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tAtaqS1" layoutX="95.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPorS1" layoutX="169.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tTecS1" layoutX="168.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tDefS1" layoutX="96.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="270.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <ImageView fx:id="sel2" fitHeight="313.0" fitWidth="225.0" onMouseClicked="#selJugadorClick" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="tMediaS2" layoutX="31.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="27.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPosS2" layoutX="32.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tNombreS2" layoutX="30.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Miguel Hernandez" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="45.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="46.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="121.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="120.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tAtaqS2" layoutX="84.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPorS2" layoutX="158.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tTecS2" layoutX="157.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tDefS2" layoutX="85.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="265.0" prefWidth="200.0" GridPane.columnIndex="2">
+                           <children>
+                              <ImageView fx:id="sel3" fitHeight="313.0" fitWidth="225.0" onMouseClicked="#selJugadorClick" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="tMediaS3" layoutX="31.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="27.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPosS3" layoutX="35.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tNombreS3" layoutX="27.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Miguel Hernandez" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="42.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="43.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="118.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="117.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tAtaqS3" layoutX="81.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPorS3" layoutX="155.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tTecS3" layoutX="154.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tDefS3" layoutX="82.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="260.0" prefWidth="200.0" GridPane.columnIndex="3">
+                           <children>
+                              <ImageView fx:id="sel4" fitHeight="313.0" fitWidth="225.0" onMouseClicked="#selJugadorClick" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="tMediaS4" layoutX="30.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="27.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPosS4" layoutX="34.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tNombreS4" layoutX="31.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Miguel Hernandez" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="46.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="47.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="122.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="121.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tAtaqS4" layoutX="85.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPorS4" layoutX="159.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tTecS4" layoutX="158.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tDefS4" layoutX="86.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="258.0" prefWidth="200.0" GridPane.columnIndex="4">
+                           <children>
+                              <ImageView fx:id="sel5" fitHeight="313.0" fitWidth="225.0" onMouseClicked="#selJugadorClick" onMouseEntered="#pasarEncima" onMouseExited="#pasarEncima" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/rotating_card_loop.gif" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="tMediaS5" layoutX="26.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="43.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="27.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPosS5" layoutX="30.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF" textAlignment="CENTER" wrappingWidth="35.13671875">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tNombreS5" layoutX="31.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Miguel Hernandez" textAlignment="CENTER" wrappingWidth="171.13671875">
+                                 <font>
+                                    <Font name="Leelawadee UI Bold" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="46.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATQ:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="47.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEF:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="122.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POR:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="121.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEC:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tAtaqS5" layoutX="85.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tPorS5" layoutX="159.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tTecS5" layoutX="158.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="tDefS5" layoutX="86.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="28.63671875">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <ImageView fx:id="btnReroll" fitHeight="52.0" fitWidth="123.0" layoutX="143.0" layoutY="312.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/Botones/btnReroll.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </GridPane>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="pClasificacion" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <center>
+                  <Pane prefHeight="677.0" prefWidth="1048.0" style="-fx-background-color: purple;" BorderPane.alignment="CENTER">
+                     <children>
+                        <TableView fx:id="tableView" layoutX="49.0" layoutY="23.0" prefHeight="550.0" prefWidth="950.0">
+                          <columns>
+                            <TableColumn fx:id="colId" prefWidth="71.0" text="ID Jugador" />
+                            <TableColumn fx:id="colEquipo" prefWidth="131.0" text="Equipo" />
+                              <TableColumn fx:id="colNombre" prefWidth="113.0" text="Nombre" />
+                              <TableColumn fx:id="colPosicion" prefWidth="67.0" text="Posicion" />
+                              <TableColumn fx:id="colAtaque" prefWidth="152.0" text="Fuerza Ataque" />
+                              <TableColumn fx:id="colTecnica" prefWidth="153.0" text="Fuerza Tecnica" />
+                              <TableColumn fx:id="colDefensa" prefWidth="129.0" text="Fuerza Defensa" />
+                              <TableColumn fx:id="colPortero" prefWidth="115.0" text="Fuerza Portero" />
+                          </columns>
+                        </TableView>
+                        <Pane layoutX="48.0" layoutY="585.0" prefHeight="88.0" prefWidth="952.0">
+                           <children>
+                              <TextField fx:id="nombreFilter" layoutX="21.0" layoutY="14.0" onKeyReleased="#aplicarFiltro" prefHeight="55.0" prefWidth="911.0" promptText="Filtrar por nombre..." styleClass="filter-textfield" />
+                           </children></Pane>
+                     </children>
+                  </Pane>
+               </center>
+               <right>
+                  <Pane prefHeight="709.0" prefWidth="97.0" BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Pane prefHeight="709.0" prefWidth="55.0" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <Pane prefHeight="29.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+            <BorderPane fx:id="pSeleccion" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <center>
+                  <Pane prefHeight="677.0" prefWidth="1048.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Pane layoutX="48.0" layoutY="121.0" prefHeight="421.0" prefWidth="952.0">
+                           <children>
+                              <ImageView fitHeight="483.0" fitWidth="955.0" layoutX="-1.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imagenes/backgroung.png" />
+                                 </image>
+                              </ImageView>
+                              <ChoiceBox fx:id="seleccionEquipo" layoutX="314.0" layoutY="132.0" prefHeight="157.0" prefWidth="325.0" styleClass="custom-choicebox" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </center>
+               <right>
+                  <Pane prefHeight="709.0" prefWidth="97.0" BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Pane prefHeight="709.0" prefWidth="55.0" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <Pane prefHeight="29.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </children>
+      </StackPane>
+   </center>
+   <top>
+      <Pane prefHeight="89.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="63.0" fitWidth="1176.0" layoutX="21.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/textselectequpo2.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </top>
+   <bottom>
+      <BorderPane prefHeight="84.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <right>
+              <HBox styleClass="hbox" BorderPane.alignment="CENTER">
+                  <children>
+                  <ImageView fx:id="btnEmpezar" fitHeight="102.0" fitWidth="269.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/start.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="btnSalir" fitHeight="102.0" fitWidth="269.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/btnSalir.png" />
+                     </image>
+                  </ImageView>
+                  </children>
+              </HBox>
+         </right>
+         <left>
+            <ImageView fx:id="btnClasificacion" fitHeight="102.0" fitWidth="269.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../imagenes/Botones/btnJugadores.png" />
+               </image>
+            </ImageView>
+         </left>
+      </BorderPane>
+   </bottom>
+</BorderPane>

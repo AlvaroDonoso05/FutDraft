@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 feb 2025, 10:28:25 by Hibernate Tools 6.5.1.Final -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Clase EventosPartido mapeada a la tabla EVENTOS_PARTIDO -->
+    <class catalog="trasversal_izan_alvaro" name="com.futboldraft.modelo.EventosPartido" optimistic-lock="none" table="EVENTOS_PARTIDO">
+        
+        <!-- ID del evento con generador identity -->
+        <id name="idEvento" type="java.lang.Integer">
+            <column name="ID_EVENTO"/>
+            <generator class="identity"/>
+        </id>
+
+        <!-- Relación many-to-one con Jugador -->
+        <many-to-one class="com.futboldraft.modelo.Jugador" fetch="select" name="jugador">
+            <column name="ID_JUGADOR" not-null="true"/>
+        </many-to-one>
+
+        <!-- Relación many-to-one con Partido -->
+        <many-to-one class="com.futboldraft.modelo.Partido" fetch="select" name="partido">
+            <column name="ID_PARTIDO" not-null="true"/>
+        </many-to-one>
+
+        <!-- Propiedad minuto -->
+        <property name="minuto" type="int">
+            <column name="MINUTO" not-null="true"/>
+        </property>
+
+        <!-- Propiedad tipoEvento -->
+        <property name="tipoEvento" type="string">
+            <column length="14" name="TIPO_EVENTO" not-null="true"/>
+        </property>
+
+        <!-- Propiedad descripcion -->
+        <property name="descripcion" type="string">
+            <column length="65535" name="DESCRIPCION"/>
+        </property>
+    </class>
+</hibernate-mapping>

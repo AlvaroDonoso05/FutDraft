@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" stylesheets="@../css/Simulacion.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.futboldraft.controlador.JornadaController">
+   <center>
+      <StackPane fx:id="rootPane" prefHeight="805.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="485.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0" prefWidth="249.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="533.0" minWidth="10.0" prefWidth="466.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ListView fx:id="listViewPartidos" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="listViewEventos" prefHeight="583.0" prefWidth="396.0" GridPane.columnIndex="2" />
+                     </children>
+                  </GridPane>
+               </center>
+               <top>
+                  <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text fx:id="txtContador" fill="WHITE" layoutX="837.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 - 0" wrappingWidth="235.13671875">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="87.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox fx:id="choiceBoxJornadas" layoutX="39.0" layoutY="50.0" prefHeight="107.0" prefWidth="470.0" styleClass="custom-choicebox" />
+                     </children>
+                  </Pane>
+               </top>
+               <left>
+                  <Pane prefHeight="600.0" prefWidth="36.0" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Pane prefHeight="583.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+            <BorderPane fx:id="pJugadores" prefHeight="824.0" prefWidth="1200.0" visible="false">
+               <center>
+                  <Pane prefHeight="677.0" prefWidth="1048.0" style="-fx-background-color: purple;" BorderPane.alignment="CENTER">
+                     <children>
+                        <TableView fx:id="tableView" layoutX="49.0" layoutY="23.0" prefHeight="550.0" prefWidth="950.0">
+                           <columns>
+                              <TableColumn fx:id="colId" prefWidth="71.0" text="ID Jugador" />
+                              <TableColumn fx:id="colEquipo" prefWidth="131.0" text="Equipo" />
+                              <TableColumn fx:id="colNombre" prefWidth="113.0" text="Nombre" />
+                              <TableColumn fx:id="colPosicion" prefWidth="67.0" text="Posicion" />
+                              <TableColumn fx:id="colAtaque" prefWidth="152.0" text="Fuerza Ataque" />
+                              <TableColumn fx:id="colTecnica" prefWidth="153.0" text="Fuerza Tecnica" />
+                              <TableColumn fx:id="colDefensa" prefWidth="129.0" text="Fuerza Defensa" />
+                              <TableColumn fx:id="colPortero" prefWidth="115.0" text="Fuerza Portero" />
+                           </columns>
+                        </TableView>
+                        <Pane layoutX="48.0" layoutY="585.0" prefHeight="88.0" prefWidth="952.0">
+                           <children>
+                              <TextField fx:id="nombreFilter" layoutX="21.0" layoutY="14.0" onKeyReleased="#aplicarFiltro" prefHeight="55.0" prefWidth="911.0" promptText="Filtrar por nombre..." styleClass="filter-textfield" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </center>
+               <right>
+                  <Pane prefHeight="709.0" prefWidth="97.0" BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Pane prefHeight="709.0" prefWidth="55.0" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <Pane prefHeight="29.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </bottom>
+               <top>
+                  <Pane prefHeight="63.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+            <BorderPane fx:id="pClasificacion" prefHeight="824.0" prefWidth="1200.0" visible="false">
+               <center>
+                  <Pane prefHeight="677.0" prefWidth="1048.0" style="-fx-background-color: purple;" BorderPane.alignment="CENTER">
+                     <children>
+                        <TableView fx:id="tableViewEquipo" layoutX="49.0" layoutY="23.0" prefHeight="550.0" prefWidth="950.0">
+                           <columns>
+                              <TableColumn fx:id="colIdEquipo" prefWidth="102.0" text="ID Equipo" />
+                              <TableColumn fx:id="colEquipo1" prefWidth="264.0" text="Equipo" />
+                              <TableColumn fx:id="colPuntos" prefWidth="132.0" text="Puntos" />
+                              <TableColumn fx:id="colFavor" prefWidth="144.0" text="Goles Favor" />
+                              <TableColumn fx:id="colContra" prefWidth="153.0" text="Goles Contra" />
+                              <TableColumn fx:id="colPartidos" prefWidth="154.0" text="PartidosJugados" />
+                           </columns>
+                        </TableView>
+                        <Pane layoutX="48.0" layoutY="585.0" prefHeight="88.0" prefWidth="952.0">
+                           <children>
+                              <TextField fx:id="nombreFilterEquipo" layoutX="21.0" layoutY="14.0" onKeyReleased="#aplicarFiltroEquipo" prefHeight="55.0" prefWidth="911.0" promptText="Filtrar por nombre..." styleClass="filter-textfield" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </center>
+               <right>
+                  <Pane prefHeight="709.0" prefWidth="97.0" BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Pane prefHeight="709.0" prefWidth="55.0" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <Pane prefHeight="29.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </bottom>
+               <top>
+                  <Pane prefHeight="63.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </children>
+      </StackPane>
+   </center>
+   <bottom>
+      <BorderPane prefHeight="100.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <left>
+            <Pane prefHeight="117.0" prefWidth="524.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="btnJugadores" fitHeight="102.0" fitWidth="269.0" layoutX="25.0" layoutY="4.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/btnJugadores.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="btnClasificacion" fitHeight="102.0" fitWidth="269.0" layoutX="290.0" layoutY="4.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/leaderboard.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </left>
+         <center>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="btnSiguienteJornada" fitHeight="110.0" fitWidth="187.0" onMouseReleased="#enfrentamientosJornada" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/btnSJornada.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="btnSalir" fitHeight="117.0" fitWidth="166.0" onMousePressed="#clickBoton" onMouseReleased="#soltarBoton" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Botones/btnSalir.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </center>
+         <right>
+            <Pane prefHeight="117.0" prefWidth="65.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </bottom>
+</BorderPane>
